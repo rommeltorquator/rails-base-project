@@ -3,6 +3,6 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_many :broker_stocks
-  has_many :transactions
+  has_many :broker_stocks, dependent: :destroy
+  has_many :transactions, dependent: :destroy
 end
