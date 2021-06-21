@@ -1,4 +1,8 @@
-<h1>Transactions</h1>
+<% if current_admin %>
+  <h1>Overall Transactions</h1>
+<% else %>
+  <h1>Transactions</h1>
+<% end%>
 
 <div class="row">
   <div class="card-group">

@@ -3,7 +3,6 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">broker #</th>
         <th scope="col">name</th>
         <th scope="col">symbol</th>
         <th scope="col">latest price</th>
@@ -13,7 +12,6 @@
     <tbody>      
       <% current_broker.stocks.each do |stock| %>
         <tr>
-          <th scope="row"><%= current_broker.id %></th>
           <td><%= stock.name %></td>
           <td><%= stock.symbol %></td>
           <td><%= stock.current_price %></td>
@@ -29,7 +27,6 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">broker #</th>
         <th scope="col">price</th>
         <th scope="col">quantity</th>
         <th scope="col">symbol</th>
@@ -40,12 +37,11 @@
     <tbody>      
       <% current_buyer.buyer_stocks.each do |stock| %>
         <tr>
-          <th scope="row"><%= current_buyer.id %></th>
           <td><%= stock.price %></td>
           <td><%= stock.quantity %></td>
           <td><%= stock.stockSymbol %></td>
           <td><%= stock.broker_email %></td>
-          <td><%= button_to "sell stock", stock_path(stock), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= button_to "sell stock", sell_buyer_stock_stocks_path(stock), method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>
     </tbody>

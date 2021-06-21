@@ -45,6 +45,15 @@ class StocksController < ApplicationController
     end
   end
 
+  def destroy_buyer_stock
+    @stock = BuyerStock.find(params[:id])
+    if @stock.destroy
+      redirect_to root_path, notice: 'buyer stock has been sold'
+    else
+      redirect_to portfolio_home_index_path
+    end
+  end
+
   private
 
   def fetch_api

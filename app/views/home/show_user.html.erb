@@ -1,0 +1,10 @@
+<h1>User show page</h1>
+<p>first name: <%= @user.first_name %></p>
+<p>last name: <%= @user.last_name %></p>
+<p>email: <%= @user.email %></p>
+User type:
+<% if @user.type == 'Broker' %>
+  <strong>Broker</strong>
+<% else %>
+  <strong>Buyer</strong>
+<% end %>

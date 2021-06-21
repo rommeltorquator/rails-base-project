@@ -3,6 +3,8 @@ class HomeController < ApplicationController
     @hope = 'Hope is the anchor of the soul'
     @brokers = User.where(type: 'Broker')
     @buyers = User.where(type: 'Buyer')
+    @pending_approval = User.where(approved: false)
+    @transactions = PurchaseTransaction.all
   end
 
   def portfolio; end
@@ -10,5 +12,22 @@ class HomeController < ApplicationController
   def transaction
     @transactions = current_buyer.purchase_transactions if current_buyer
     @transactions = PurchaseTransaction.where(broker_id: current_broker.id) if current_broker
+    @transactions = PurchaseTransaction.all if current_admin
+  end
+
+  def show_user
+    @user = User.find(params[:id])
+  end
+
+  def approve
+    @broker = User.find(params[:broker])
+
+    if @broker
+      @broker.update(approved: true)
+      @broker.save
+      redirect_to root_path, notice: "Approved na ituu"
+    else
+      redirect_to root_path, notice: "hindi na-save gago"
+    end
   end
 end
