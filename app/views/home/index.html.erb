@@ -32,6 +32,13 @@
         <p><%= buyer.email %></p>
         <p><%= buyer.first_name %></p>
         <p><%= buyer.last_name %></p>
+    <div class="col-md-6">
+      <h2>buyer count: <%= @buyers.count %></h2>
+      <% @buyers.each do |buyer| %>
+        <p><%= buyer.email %></p>
+        <p><%= buyer.first_name %></p>
+        <p><%= buyer.last_name %></p>
+        <h3>Status: pending</h3>
         <hr/>
       <% end %>
     </div>
@@ -51,6 +58,12 @@
         <% else %>
           <h3>Status: Approved</h3>
         <% end %>
+      <h2>broker count: <%= @brokers.count %></h2>
+      <% @brokers.each do |brokers| %>
+        <p><%= brokers.email %></p>
+        <p><%= brokers.first_name %></p>
+        <p><%= brokers.last_name %></p>
+        <h3>Status: pending</h3>
         <hr/>
       <% end %>
     </div>
