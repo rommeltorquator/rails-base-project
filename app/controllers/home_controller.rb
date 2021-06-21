@@ -25,9 +25,9 @@ class HomeController < ApplicationController
     if @broker
       @broker.update(approved: true)
       @broker.save
-      redirect_to root_path, notice: "Approved na ituu"
+      redirect_to root_path, notice: 'Broker approved'
     else
-      redirect_to root_path, notice: "hindi na-save gago"
+      redirect_to root_path, notice: 'Broker not approved'
     end
   end
 end
