@@ -28,6 +28,7 @@ class HomeController < ApplicationController
 
     if @broker
       @broker.update(approved: true)
+      UserMailer.with(email: @broker.email).admin_approved_email.deliver_now
       @broker.save
       redirect_to root_path, notice: 'Broker approved'
     else
