@@ -11,12 +11,12 @@ class HomeController < ApplicationController
 
   def transaction
     @transactions = if current_buyer
-      current_buyer.purchase_transactions
-    elsif current_broker
-      PurchaseTransaction.where(broker_id: current_broker.id)
-    elsif current_admin
-      PurchaseTransaction.all
-    end
+                      current_buyer.purchase_transactions
+                    elsif current_broker
+                      PurchaseTransaction.where(broker_id: current_broker.id)
+                    elsif current_admin
+                      PurchaseTransaction.all
+                    end
   end
 
   def show_user
