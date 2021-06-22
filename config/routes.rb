@@ -16,6 +16,8 @@ Rails.application.routes.draw do
       get 'transaction'
       get 'show_user/:id', to: "home#show_user", as: "show_user"
       patch 'update_approved_status/', to: "home#approve"
+
+      patch 'update_buyer', to: "home#update_buyer", as: "update_buyer"
     end
   end
 

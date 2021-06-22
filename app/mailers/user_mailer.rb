@@ -3,9 +3,9 @@ class UserMailer < ApplicationMailer
     @email = params[:email]
 
     mail(
-      from: "Stock App <support@gmail.com>",
+      from: 'Stock App <support@gmail.com>',
       to: @email,
-      subject: "Your account has been successfully created."
+      subject: 'Your account has been successfully created.'
     )
   end
 
@@ -13,7 +13,7 @@ class UserMailer < ApplicationMailer
     @email = params[:email]
 
     mail(
-      from: "Stock App <support@gmail.com>",
+      from: 'Stock App <support@gmail.com>',
       to: @email,
       subject: "Pending Admin approval for #{@email}."
     )
@@ -23,7 +23,7 @@ class UserMailer < ApplicationMailer
     @email = params[:email]
 
     mail(
-      from: "Stock App <support@gmail.com>",
+      from: 'Stock App <support@gmail.com>',
       to: @email,
       subject: "Account #{@email} has been approved."
     )
