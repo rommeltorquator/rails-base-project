@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe StocksController, type: :controller do
+RSpec.describe 'Stocks', type: :request do
   before do
     @user = User.create(id: 100, email: 'test1@email.com', created_at: '2021-06-21 10:25:00', updated_at: '2021-06-21 10:25:00', first_name: nil, last_name: nil, type: nil)
 

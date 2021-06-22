@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe HomeController, type: :controller do
+RSpec.describe 'Homes', type: :request do
   describe '#index' do
     it 'responds successfully' do
       get :index
