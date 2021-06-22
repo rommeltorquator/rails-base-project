@@ -5,7 +5,6 @@ class HomeController < ApplicationController
     @buyers = User.where(type: 'Buyer')
     @pending_approval = User.where(approved: false)
     @transactions = PurchaseTransaction.all
-
   end
 
   def portfolio; end
