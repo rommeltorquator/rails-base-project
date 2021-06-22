@@ -6,13 +6,16 @@ Rails.application.routes.draw do
   resources :stocks, only: [ :index, :show, :create, :destroy ] do
     collection do
       post 'add_stock'
+      delete 'sell_buyer_stock/:id', to: "stocks#destroy_buyer_stock", as: "sell_buyer_stock"      
     end
   end
 
-  resources :home, only: [ :index, :portfolio, :transaction ] do
+  resources :home, only: [ :index ] do
     collection do # would not ask for a param
       get 'portfolio'
       get 'transaction'
+      get 'show_user/:id', to: "home#show_user", as: "show_user"
+      patch 'update_approved_status/', to: "home#approve"
     end
   end
 
