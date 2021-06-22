@@ -17,26 +17,39 @@
   <h1><%= @hope %></h1>
   <br/>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12 mb-5">
+      <h2>Pending broker approval: <%= @pending_approval.count %></h2>
+      <h2>no of transactions: <%= @transactions.count %></h2>
       <h2>buyer count: <%= @buyers.count %></h2>
+      <h2>broker count: <%= @brokers.count %></h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h1>list of buyers</h1>
       <% @buyers.each do |buyer| %>
+        <p><%= link_to buyer.id, show_user_home_index_path(buyer) %></p>
         <p><%= buyer.email %></p>
         <p><%= buyer.first_name %></p>
         <p><%= buyer.last_name %></p>
-        <h3>Status: pending</h3>
-        <hr/>
       <% end %>
     </div>
     <div class="col-md-6">
-      <h2>broker count: <%= @brokers.count %></h2>
-      <% @brokers.each do |brokers| %>
-        <p><%= brokers.email %></p>
-        <p><%= brokers.first_name %></p>
-        <p><%= brokers.last_name %></p>
-        <h3>Status: pending</h3>
-        <hr/>
-      <% end %>
+      <h1>list of brokers</h1>
+      <% @brokers.each do |broker| %>
+        <p>broker id: <%= link_to broker.id, show_user_home_index_path(broker) %></p>
+        <p>email: <%= broker.email %></p>
+        <p>first name: <%= broker.first_name %></p>
+        <p>last name: <%= broker.last_name %></p>
+        <% if broker.approved == false %>
+          <h3>Status: Pending approval</h3>
+          <%= link_to 'Accept', { :controller => "home",
+                                   :action => "approve",
+                                   :broker => broker,
+                                   :approved => true }, method: 'patch' %>
+        <% else %>
+          <h3>Status: Approved</h3>
+        <% end %>
     </div>
-  </div>
-  
+<% end %>
 <% end %>
