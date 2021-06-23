@@ -1,4 +1,4 @@
-<% if current_broker %>
+<% if current_broker && current_broker.approved? %>
   <h1 class="text-center">Portfolio page for broker</h1>
   <table class="table">
     <thead>

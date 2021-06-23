@@ -1,31 +1,91 @@
-<% if broker_signed_in? %>
+<% if broker_signed_in? && current_broker.approved? %>
   <h1 class="text-center">Home Index page for brokers!</h1>
   <h2>Hello</h2>
   <%= current_broker.first_name %><br/>
   <%= current_broker.last_name %><br/>
 <% end %>
-
 <% if buyer_signed_in? %>
-  <h1 class="text-center">Home Index page for buyers!</h1> 
+  <h1 class="text-center">Home Index page for buyers!</h1>
   <h2>Hello</h2>
   <%= current_buyer.first_name %><br/>
   <%= current_buyer.last_name %><br/>
 <% end %>
-
 <% if admin_signed_in? %>
-  <p>admin dashboard page</p>
-  <h1><%= @hope %></h1>
-  <br/>
-  <div class="row">
-    <div class="col-md-12 mb-5">
-      <h2>Pending broker approval: <%= @pending_approval.count %></h2>
-      <h2>no of transactions: <%= @transactions.count %></h2>
-      <h2>buyer count: <%= @buyers.count %></h2>
-      <h2>broker count: <%= @brokers.count %></h2>
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Create new user
+  </button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Create user</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <%= form_with model: @new_user, url: create_user_home_index_path, local: true do |f| %>
+            <% if @new_user.errors.any? %>
+              <p>Merong errors</p>
+            <% end %>
+
+            <div class="form-group">
+              <%= f.label :email %><br />
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :first_name %><br />
+              <%= f.text_field :first_name, value: "", class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :last_name %><br />
+              <%= f.text_field :last_name, value: "", class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :type %>
+              <p><%= f.select :type, [ "Buyer", "Broker" ], class: "form-select" %></p>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :password %>
+              <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :password_confirmation %><br />
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+            </div>
+
+            <br/>
+            <div class="actions">
+              <%= f.submit "Sign up", class: "btn btn-danger" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
+
+  <h1><%= @hope %></h1>
+  <br/>
+
+
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12 mb-5">
+      <h2 class="bg-primary">Pending broker approval: <%= @pending_approval.count %></h2>
+      <h2 class="bg-secondary">no of transactions: <%= @transactions.count %></h2>
+      <h2 class="bg-success">buyer count: <%= @buyers.count %></h2>
+      <h2 class="bg-warning">broker count: <%= @brokers.count %></h2>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-6 bg-success">
       <h1>list of buyers</h1>
       <% @buyers.each do |buyer| %>
         <p><%= link_to buyer.id, show_user_home_index_path(buyer) %></p>
@@ -33,7 +93,8 @@
         <p><%= buyer.first_name %></p>
         <p><%= buyer.last_name %></p>
       <% end %>
-    </div>
+    </div> <!-- col-md-6 -->
+
     <div class="col-md-6">
       <h1>list of brokers</h1>
       <% @brokers.each do |broker| %>
@@ -50,6 +111,7 @@
         <% else %>
           <h3>Status: Approved</h3>
         <% end %>
+      <% end %>
     </div>
-<% end %>
+  </div> <!-- row -->
 <% end %>
