@@ -41,10 +41,6 @@ yarn-debug.log*
 .yarn-integrity
 
 config/database.yml
-<<<<<<< HEAD
+
 /config/local_env.yml
 /config/master.key
-=======
-/config/local_env.yml
-/config/master.key
->>>>>>> 5ca9d913f08f275f33f8768e761eaa64627fda2f
