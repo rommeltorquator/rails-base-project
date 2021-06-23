@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       patch 'update_approved_status/', to: "home#approve"
 
       patch 'update_buyer', to: "home#update_buyer", as: "update_buyer"
+      post 'create_user', to: "home#create_user", as: "create_user"
     end
   end
 
