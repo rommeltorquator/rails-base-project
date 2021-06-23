@@ -26,7 +26,6 @@ class HomeController < ApplicationController
 
   def approve
     @broker = User.find(params[:broker])
-
     if @broker
       @broker.update(approved: true)
       UserMailer.with(email: @broker.email).admin_approved_email.deliver_now
