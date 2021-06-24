@@ -69,11 +69,8 @@
       </div>
     </div>
   </div>
-
   <h1><%= @hope %></h1>
   <br/>
-
-
   <div class="row">
     <div class="col-md-12 mb-5">
       <h2 class="bg-primary">Pending broker approval: <%= @pending_approval.count %></h2>
@@ -82,8 +79,6 @@
       <h2 class="bg-warning">broker count: <%= @brokers.count %></h2>
     </div>
   </div>
-
-
   <div class="row">
     <div class="col-md-6 bg-success">
       <h1>list of buyers</h1>
@@ -94,7 +89,6 @@
         <p><%= buyer.last_name %></p>
       <% end %>
     </div> <!-- col-md-6 -->
-
     <div class="col-md-6">
       <h1>list of brokers</h1>
       <% @brokers.each do |broker| %>
@@ -114,4 +108,7 @@
       <% end %>
     </div>
   </div> <!-- row -->
+<% end %>
+<% if !broker_signed_in? && !buyer_signed_in? && !admin_signed_in? %>
+  <%= render 'partials/index' %>
 <% end %>

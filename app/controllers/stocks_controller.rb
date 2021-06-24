@@ -1,4 +1,5 @@
 class StocksController < ApplicationController
+  before_action :authenticate_user!, except: [:index]
   before_action :fetch_api, only: %i[index show create]
   def index; end
 
