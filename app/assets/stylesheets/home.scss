@@ -1,3 +1,50 @@
 // Place all the styles related to the Home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+body {
+  min-height: 100vh;
+  // background-color: #e8cbc0;
+  // background-image: url("https://images.unsplash.com/photo-1580490142450-a97fa584a413?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80");
+}
+
+.social-link {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  border-radius: 50%;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+}
+
+.social-link:hover, .social-link:focus {
+  background: #ddd;
+  text-decoration: none;
+  color: #555;
+}
+// .team-card {
+//   background: #e8cbc0;
+//   background: -webkit-linear-gradient(to right, #e8cbc0, #636fa4);
+//   background: linear-gradient(to right, #e8cbc0, #636fa4);
+// }
+
+.text-moneygreen{
+  color:#5CDB95;
+}
+
+.bg-moneywhite{
+  color:#f1f2ed;
+}
+
+
+.team-container {
+  background: #e8cbc0;
+  background: -webkit-linear-gradient(to right, #e8cbc0, #636fa4);
+  background: linear-gradient(to right, #e8cbc0, #636fa4);
+  align-items: center;
+  justify-content: center;
+}
