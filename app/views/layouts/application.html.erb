@@ -7,13 +7,24 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
   </head>
 
   <body>
     <%= render 'partials/header' %>
+    <%= render 'partials/jumbotron' %>
+
     <div class="container">
       <%= render 'partials/messages'%>
       <%= yield %>
     </div>
+    <br/>
+    <div class="container">
+      <%= render 'partials/team'%>
+    </div>
+
+    <footer class="footer navbar-fixed-bottom">
+    <%= render 'partials/footer'%>
+    </footer>
   </body>
 </html>
