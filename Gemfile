@@ -20,6 +20,7 @@ gem "font-awesome-rails"
 gem 'iex-ruby-client', '~> 1.4', '>= 1.4.1'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'popper_js', '~> 2.9', '>= 2.9.2'
+gem 'font-awesome-sass', '~> 5.15.1'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
