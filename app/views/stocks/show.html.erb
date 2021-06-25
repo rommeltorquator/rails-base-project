@@ -7,7 +7,7 @@
 <div class="row">
   <div class="col-md-6">
     <!-- for broker -->
-    <% if current_broker %>
+    <% if current_broker && current_broker.approved? %>
       <h1>name: <%= @stock.company_name %></h1><br/>
       <h1>symbol: <%= @stock.symbol %></h1><br/>
       <h1>latest price: <%= number_to_currency(@stock.latest_price) %></h1><br/>

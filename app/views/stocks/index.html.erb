@@ -15,7 +15,7 @@
 <br/>
 
 <!-- for broker -->
-<% if current_broker %>
+<% if current_broker && current_broker.approved? %>
   <div class="card-group">
     <% @client.stock_market_list(:mostactive).each do |stock| %>
       <div class="card">
@@ -32,7 +32,7 @@
   </div>
 <% end %>
 
-<% if current_buyer %>
+<% if current_buyer %>  
   <div class="card-group">
     <% @client.stock_market_list(:mostactive).each do |stock| %>
       <div class="card">
