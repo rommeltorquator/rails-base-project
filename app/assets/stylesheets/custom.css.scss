@@ -6,6 +6,10 @@ body {
   min-height: 100vh;
 }
 
+body >.footer {
+  padding-top: 60px;
+}
+
 .social-link {
   width: 30px;
   height: 30px;
@@ -36,12 +40,4 @@ body {
 
 .bg-moneywhite{
   color:#f1f2ed;
-}
-
-.team-container {
-  background: #e8cbc0;
-  background: -webkit-linear-gradient(to right, #e8cbc0, #636fa4);
-  background: linear-gradient(to right, #e8cbc0, #636fa4);
-  align-items: center;
-  justify-content: center;
 }

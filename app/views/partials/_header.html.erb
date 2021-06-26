@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-    <%= link_to "StockXchange", root_path, class: "navbar-brand" %>
+    <%= link_to "stockXchange", root_path, class: "navbar-brand" %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -52,15 +52,18 @@
             <%= link_to "Portfolio", portfolio_home_index_path, class: "nav-link" %>
           </li>   
           <li class="nav-item">
-            <%= link_to "admin Sign out", destroy_admin_session_path , protocol: 'https', method: :delete, class: "nav-link" %>
+            <%= link_to "Sign out", destroy_admin_session_path , protocol: 'https', method: :delete, class: "nav-link" %>
           </li>                   
-        <% else %>          
-          <li class="nav-item">
-            <%= link_to "broker Sign in", new_broker_session_path, class: "nav-link" %>
-          </li>          
-          <li class="nav-item">
-            <%= link_to "buyer Sign in", buyer_session_path, class: "nav-link" %>
-          </li>
+        <% else %>
+        <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+        Log In
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">          
+          <li><%= link_to "Broker", new_broker_session_path, class: "dropdown-item" %></li>          
+          <li><%= link_to "Buyer", buyer_session_path, class: "dropdown-item" %></li>
+        </ul>
+        </div>
         <% end %>
       </ul>
     </div>
