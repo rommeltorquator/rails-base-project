@@ -12,27 +12,11 @@
 
   <body>
     <%= render 'partials/header' %>
-    <%= render 'partials/jumbotron' %>
-
     <div class="container">
       <%= render 'partials/messages'%>
-      <%= yield %>
     </div>
-    <br/>
-    <div class="container">
-      <%= render 'partials/buyer_cta'%>
-    </div>
-    <br/>
-    <div class="container">
-      <%= render 'partials/broker_cta'%>
-    </div>
-    <br/>
-    <div class="container">
-      <%= render 'partials/team'%>
-    </div>
-
-    <footer class="footer navbar-fixed-bottom">
-    <%= render 'partials/footer'%>
-    </footer>
+    <%= yield %>
   </body>
 </html>
+ 
+ 
