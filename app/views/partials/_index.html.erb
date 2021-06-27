@@ -1,43 +1,9 @@
-<!--
-<h1 class="text-center mt-5">Welcome to Stock App</h1>
-<div class="row">
-  <div class="col-md-4 offset-md-4">
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Buyer sign-up</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Broker sign-up</button>
-      </li>
-    </ul>
-    
-    <div class="tab-content" id="myTabContent">
-      <br/>
-      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <%= link_to "broker Sign up", new_broker_registration_path, class: "btn btn-danger" %>
-      </div>
-      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        <%= link_to "buyer Sign up", new_buyer_registration_path, class: "btn btn-success" %>
-      </div>
-    </div>
-    
-  </div>
-</div> -->
 
-    <%= render 'partials/jumbotron' %>
-    <br/>
-    <div class="container">
-      <%= render 'partials/buyer_cta'%>
-    </div>
-    <br/>
-    <div class="container">
-      <%= render 'partials/broker_cta'%>
-    </div>
-    <br/>
-    <div class="container">
-      
-    </div>
-    <%= render 'partials/team'%>
-    <footer class="footer navbar-fixed-bottom">
-    <%= render 'partials/footer'%>
-    </footer> 
+<%= render 'partials/jumbotron' %>
+<%= render 'partials/buyer_cta'%>
+<%= render 'partials/broker_cta'%>
+<%= render 'partials/team'%>
+<footer class="footer navbar-fixed-bottom">
+  <%= render 'partials/footer'%>
+</footer>
+ 

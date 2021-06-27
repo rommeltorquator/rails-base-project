@@ -20,12 +20,12 @@
   <% end %>
 
   <div class="actions">
-    <%= f.submit "Sign up" %>  
+    <%= f.submit "Log In", class:"btn btn-danger" %>  
   </div>
 <% end %>
 <br/>
-<br/>
-Dont have an account with us? Or you may have forgotten your password. Click here <%= render "devise/shared/links" %>
+Dont have an account with us? Or you may have forgotten your password. 
+<%= render "devise/shared/links" %>
 </div>
 <footer class="text-center text-white fixed-bottom" style="background-color: #21081a;">
   <%= render 'partials/footer_slim'%>

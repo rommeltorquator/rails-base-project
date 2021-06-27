@@ -1,14 +1,428 @@
 <% if broker_signed_in? && current_broker.approved? %>
-  <h1 class="text-center">Home Index page for brokers!</h1>
-  <h2>Hello</h2>
-  <%= current_broker.first_name %><br/>
-  <%= current_broker.last_name %><br/>
+  <h1 class="text-center"><%= current_broker.first_name %>'s Broker Dashboard</h1>
+  <h2 class="text-center">Hello, we can put a random quote here or enable the Stock ticker</h2>
+<!-- 1st table transactions -->
+<div class="container">
+  <div class="card">
+    <div class="card-header">Daily Transactions</div>
+    <div class="card-body">
+      <h5 class="card-title">Check Today's transactions</h5>
+      <p class="card-text">
+        Let's start earning you more money by going to your transactions.
+        In the meantime, here's a quick view of your current transactions.
+      </p>
+      <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Stock</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Price per Stock</th>
+      <th scope="col">Total Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-active">
+      <th scope="row">1</th>
+      <td>Jaren</td>
+      <td>Cudilla</td>
+      <td>Apple</td>
+      <td>1000</td>
+      <td>14.83</td>
+      <td>$14,830</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Rommel</td>
+      <td>Torquator</td>
+      <td>Apple</td>
+      <td>1500</td>
+      <td>14.83</td>
+      <td>$22,245</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Rommel</td>
+      <td>Torquator</td>
+      <td>Toyota</td>
+      <td>1500</td>
+      <td>22.64</td>
+      <td>$33,960</td>
+    </tr>
+  </tbody>
+</table>
+    <%= link_to "View Detailed Transactions", transaction_home_index_path, class:"btn btn-primary" %>
+    </div>
+    </div>
+</div>
+<!-- end 1st table -->
+<!-- 2nd table buyer list -->
+<div class="container" style="margin-top: 10px;">
+  <div class="card-group">
+  <div class="card col-md-9" style="padding: 10px;">
+    <div class="card-header">Trending</div>
+    <div class="card-body">
+      <h5 class="card-title">Current Stock Performance</h5>
+      <p class="card-text">
+        Daily Performance of your watched Stock and (if any) Buyers that have purchased the stock.
+      </p>
+      <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Stock</th>
+      <th scope="col">Open</th>
+      <th scope="col">High</th>
+      <th scope="col">Low</th>
+      <th scope="col">Market Cap</th>
+      <th scope="col">Buyer</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-active">
+      <th scope="row">Apple</th>
+      <td>133.46</td>
+      <td>133.89</td>
+      <td>132.81</td>
+      <td>2.22T</td>
+      <td>Jaren, Rommel</td>
+      <td>Buy / Sell</td>
+    </tr>
+    <tr>
+      <th scope="row">NVIDIA</th>
+      <td>771.22</td>
+      <td>773.82</td>
+      <td>755.78</td>
+      <td>474.25B</td>
+      <td> - </td>
+      <td>Buy / Sell</td>
+    </tr>
+    <tr>
+      <th scope="row">Asus</th>
+      <td>375.00</td>
+      <td>375.00</td>
+      <td>367.00</td>
+      <td>272.59B</td>
+      <td> - </td>
+      <td>Buy / Sell</td>
+    </tr>
+  </tbody>
+      </table>
+    <%= link_to "View Details", stocks_path, class:"btn btn-primary" %>
+    </div>
+</div>
+<!-- end 2nd table -->
+<!-- 3rd table movers and shakers -->
+  <div class="card col-md-3" style="padding: 10px;">
+    <div class="card-header">Gainers and Losers</div>
+    <div class="card-body">
+      <h5 class="card-title">Today's Movers and Shakers</h5>
+      <p class="card-text">
+        Top Gainers for the day, maybe it's time to sell.
+      </p>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+      <th scope="col">Today's Gainers</th>
+      <th scope="col">Price</th>
+      <th scope="col">24h Change</th>
+      <th scope="col">Market Cap</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-active">
+      <th scope="row">Apple</th>
+      <td>$15.83</td>
+      <td>6.23%</td>
+      <td>$1,623,345</td>
+    </tr>
+    <tr>
+      <th scope="row">Asus</th>
+      <td>22.83</td>
+      <td>5.89%</td>
+      <td>$34,510,282</td>
+    </tr>
+    <tr>
+      <th scope="row">Nvidia</th>
+      <td>29.64</td>
+      <td>4.18%</td>
+      <td>$4,654,129</td>
+    </tr>
+  </tbody>
+</table>
+    <%= link_to "View Details", stocks_path, class:"btn btn-primary" %>
+    </div>
+  </div>
+  </div>
+<!-- end 3rd table -->
+<!-- start of 4th table portfolio-->
+<div class="container" style="margin-top: 10px; margin-bottom: 10px;">
+  <div class="card">
+    <div class="card-header">Portfolio</div>
+    <div class="card-body">
+      <h5 class="card-title">Portfolio Quick view</h5>
+      <p class="card-text">
+        Portfolio Quick View is your top earning stocks.
+      </p>
+      <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Stock</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Price per Stock</th>
+      <th scope="col">Total Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-active">
+      <th scope="row">1</th>
+      <td>Jaren</td>
+      <td>Cudilla</td>
+      <td>Apple</td>
+      <td>1000</td>
+      <td>14.83</td>
+      <td>$14,830</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Rommel</td>
+      <td>Torquator</td>
+      <td>Apple</td>
+      <td>1500</td>
+      <td>14.83</td>
+      <td>$22,245</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Rommel</td>
+      <td>Torquator</td>
+      <td>Toyota</td>
+      <td>1500</td>
+      <td>22.64</td>
+      <td>$33,960</td>
+    </tr>
+  </tbody>
+</table>
+    <%= link_to "View Details", portfolio_home_index_path, class:"btn btn-primary" %>
+    </div>
+    </div>
+</div>
+</div>
+<!-- end of 4th table-->
 <% end %>
 <% if buyer_signed_in? %>
-  <h1 class="text-center">Home Index page for buyers!</h1>
-  <h2>Hello</h2>
-  <%= current_buyer.first_name %><br/>
-  <%= current_buyer.last_name %><br/>
+  <h1 class="text-center"><%= current_buyer.first_name %>'s Buyer Dashboard</h1>
+  <h2 class="text-center">Hello, we can put a random quote here or enable the Stock ticker</h2>
+<!-- 1st table transactions -->
+<div class="container">
+  <div class="card">
+    <div class="card-header">Daily Transactions</div>
+    <div class="card-body">
+      <h5 class="card-title">Check Today's transactions</h5>
+      <p class="card-text">
+        Let's start earning you more money by going to your transactions.
+        In the meantime, here's a quick view of your current transactions.
+      </p>
+      <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Stock</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Price per Stock</th>
+      <th scope="col">Total Price</th>
+      <th scope="col">Broker</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-active">
+      <th scope="row">1</th>
+      <td>Apple</td>
+      <td>1000</td>
+      <td>14.83</td>
+      <td>$14,830</td>
+      <td>Jaren</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Apple</td>
+      <td>1500</td>
+      <td>14.83</td>
+      <td>$22,245</td>
+      <td>Rommel</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Toyota</td>
+      <td>1500</td>
+      <td>22.64</td>
+      <td>$33,960</td>
+      <td>Rommel</td>
+    </tr>
+  </tbody>
+</table>
+    <%= link_to "View Detailed Transactions", transaction_home_index_path, class:"btn btn-primary" %>
+    </div>
+    </div>
+</div>
+<!-- end 1st table -->
+<!-- 2nd table buyer list -->
+<div class="container" style="margin-top: 10px;">
+  <div class="card-group">
+  <div class="card col-md-9" style="padding: 10px;">
+    <div class="card-header">Trending</div>
+    <div class="card-body">
+      <h5 class="card-title">Current Stock Performance</h5>
+      <p class="card-text">
+        Daily Performance of your watched Stock and (if any) Buyers that have purchased the stock.
+      </p>
+      <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Stock</th>
+      <th scope="col">Open</th>
+      <th scope="col">High</th>
+      <th scope="col">Low</th>
+      <th scope="col">Market Cap</th>
+      <th scope="col">Action</th>
+      <th scope="col">Contact Broker</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-active">
+      <th scope="row">Apple</th>
+      <td>133.46</td>
+      <td>133.89</td>
+      <td>132.81</td>
+      <td>2.22T</td>
+      <td>Buy / Sell</td>
+      <td>Email</td>
+    </tr>
+    <tr>
+      <th scope="row">NVIDIA</th>
+      <td>771.22</td>
+      <td>773.82</td>
+      <td>755.78</td>
+      <td>474.25B</td>
+      <td>Buy / Sell</td>
+      <td>Email</td>
+    </tr>
+    <tr>
+      <th scope="row">Asus</th>
+      <td>375.00</td>
+      <td>375.00</td>
+      <td>367.00</td>
+      <td>272.59B</td>
+      <td>Buy / Sell</td>
+      <td>Email</td>
+    </tr>
+  </tbody>
+      </table>
+    <%= link_to "View Details", stocks_path, class:"btn btn-primary" %>
+    </div>
+</div>
+<!-- end 2nd table -->
+<!-- 3rd table movers and shakers -->
+  <div class="card col-md-3" style="padding: 10px;">
+    <div class="card-header">Gainers and Losers</div>
+    <div class="card-body">
+      <h5 class="card-title">Today's Movers and Shakers</h5>
+      <p class="card-text">
+        Top Gainers for the day, maybe it's time to sell.
+      </p>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+      <th scope="col">Today's Gainers</th>
+      <th scope="col">Price</th>
+      <th scope="col">24h Change</th>
+      <th scope="col">Market Cap</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-active">
+      <th scope="row">Apple</th>
+      <td>$15.83</td>
+      <td>6.23%</td>
+      <td>$1,623,345</td>
+    </tr>
+    <tr>
+      <th scope="row">Asus</th>
+      <td>$22.83</td>
+      <td>5.89%</td>
+      <td>$34,510,282</td>
+    </tr>
+    <tr>
+      <th scope="row">Nvidia</th>
+      <td>$29.64</td>
+      <td>4.18%</td>
+      <td>$4,654,129</td>
+    </tr>
+  </tbody>
+</table>
+    <%= link_to "View Details", stocks_path, class:"btn btn-primary" %>
+    </div>
+  </div>
+  </div>
+<!-- end 3rd table -->
+<!-- start of 4th table portfolio-->
+<div class="container" style="margin-top: 10px; margin-bottom: 10px;">
+  <div class="card">
+    <div class="card-header">Portfolio</div>
+    <div class="card-body">
+      <h5 class="card-title">Portfolio Quick view</h5>
+      <p class="card-text">
+        Portfolio Quick View is your top earning stocks.
+      </p>
+      <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Stock</th>     
+      <th scope="col">Quantity</th>
+      <th scope="col">Price per Stock</th>
+      <th scope="col">Total Price</th>
+      <th scope="col">Broker</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-active">
+      <th scope="row">1</th>
+      <td>Apple</td>
+      <td>2500</td>
+      <td>14.83</td>
+      <td>$37,075</td>
+      <td>Jaren, Rommel</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>NVIDIA</td>
+      <td>5000</td>
+      <td>771.22</td>
+      <td>$3,856,100</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Toyota</td>
+      <td>1500</td>
+      <td>22.64</td>
+      <td>$33,960</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+</table>
+    <%= link_to "View Details", portfolio_home_index_path, class:"btn btn-primary" %>
+    </div>
+    </div>
+</div>
+</div>
+<!-- end of 4th table-->
 <% end %>
 <% if admin_signed_in? %>
   <!-- Button trigger modal -->
@@ -112,3 +526,4 @@
 <% if !broker_signed_in? && !buyer_signed_in? && !admin_signed_in? %>
   <%= render 'partials/index' %>
 <% end %>
+
