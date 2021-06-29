@@ -1,6 +1,6 @@
 <% if broker_signed_in? && current_broker.approved? %>
   <h1 class="text-center"><%= current_broker.first_name %>'s Broker Dashboard</h1>
-  <h2 class="text-center">Hello, we can put a random quote here or enable the Stock ticker</h2>
+  <h2 class="text-center"><%= render 'partials/stock_ticker'%></h2>
 <!-- 1st table transactions -->
 <div class="container">
   <div class="card">
@@ -55,7 +55,7 @@
 </table>
     <%= link_to "View Detailed Transactions", transaction_home_index_path, class:"btn btn-primary" %>
     </div>
-    </div>
+  </div>
 </div>
 <!-- end 1st table -->
 <!-- 2nd table buyer list -->
@@ -217,7 +217,7 @@
 <% end %>
 <% if buyer_signed_in? %>
   <h1 class="text-center"><%= current_buyer.first_name %>'s Buyer Dashboard</h1>
-  <h2 class="text-center">Hello, we can put a random quote here or enable the Stock ticker</h2>
+  <h2 class="text-center"><%= render 'partials/stock_ticker'%></h2>
 <!-- 1st table transactions -->
 <div class="container">
   <div class="card">
@@ -328,7 +328,7 @@
 </div>
 <!-- end 2nd table -->
 <!-- 3rd table movers and shakers -->
-  <div class="card col-md-3" style="padding: 10px;">
+  <div class="card col-md-4" style="padding: 10px;">
     <div class="card-header">Gainers and Losers</div>
     <div class="card-body">
       <h5 class="card-title">Today's Movers and Shakers</h5>

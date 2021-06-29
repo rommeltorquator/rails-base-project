@@ -45,3 +45,16 @@ config/database.yml
 /config/local_env.yml
 /config/master.key
 /config/master.key
+bin/rails
+bin/rails
+bin/rake
+bin/setup
+bin/webpack-dev-server
+bin/webpack
+bin/setup
+bin/rails
+bin/rake
+bin/setup
+bin/webpack
+bin/webpack-dev-server
+bin/yarn
