@@ -5,7 +5,8 @@ Rails.application.routes.draw do
 
   resources :stocks, only: [ :index, :show, :create, :destroy ] do
     collection do
-      post 'watch', to: "stocks#watch"
+      get 'watch', to: "stocks#watch"
+      get 'unwatch', to: "stocks#unwatch"
       post 'add_stock'
       delete 'sell_buyer_stock/:id', to: "stocks#destroy_buyer_stock", as: "sell_buyer_stock"      
     end

@@ -1,7 +1,7 @@
 class StocksController < ApplicationController
   # before_action :authenticate_broker!, except: [:index]
   # before_action :authenticate_buyer!, except: [:index]
-  before_action :fetch_api, only: %i[index show create]
+  before_action :fetch_api, only: %i[index show create watch unwatch]
 
   def index; end
 
@@ -23,6 +23,8 @@ class StocksController < ApplicationController
   # buyer stocks
   def add_stock
     @buyer = current_buyer.buyer_stocks.find_by(stockSymbol: params[:stock_symbol])
+    @watched_stock = WatchedStock.find_by(symbol: params[:stock_symbol])
+    @watched_stock.destroy
     if @buyer.nil?
       @buyer_stock = BuyerStock.new(user_id: current_buyer.id, price: params[:price], quantity: params[:quantity], broker_email: params[:broker_email].to_s, stockSymbol: params[:stock_symbol].to_s)
       if @buyer_stock.save
@@ -66,13 +68,20 @@ class StocksController < ApplicationController
   end
 
   def watch
-    # @stock = @client.quote(params[:id].to_s)
-    # session[:watched].push(h)
-    redirect_to stocks_path, notice: 'Stock has been added to watch list'
+    @stock = @client.quote(params[:symbol].to_s)
+    @watched_stock = WatchedStock.new(buyer_id: current_buyer.id, symbol: @stock.symbol, avg_total_volume: @stock.avg_total_volume, latest_price: @stock.latest_price, company: @stock.company_name, change_percent_s: @stock.change_percent_s)
+
+    @watched_stock.save
+    redirect_to root_path, notice: "Stock has been added to watch list"
+  end
+
+  def unwatch
+    @watched_stock = WatchedStock.find_by(symbol: params[:symbol])
+    @watched_stock.destroy
+    redirect_to stocks_path, notice: 'You have unfollowed a stock'
   end
 
   private
-
   def fetch_api
     @client = IEX::Api::Client.new(
       publishable_token: ENV['PUBLIC'],
