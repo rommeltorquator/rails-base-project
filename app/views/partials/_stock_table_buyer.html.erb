@@ -2,14 +2,14 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="table-wrap">
+				<div class="tablegit ">
 					<table class="table table-striped">
 						<thead>
 							<tr>
 								<th>Symbol</th>
 								<th>Company Name</th>
 								<th>Latest Price</th>
-								<th>Avg total volume</th>
+								<th>Daily Change</th>
 								<th>Action</th>
 							</tr>
 						</thead>
@@ -19,7 +19,7 @@
 										<td><%= stock.symbol %></td>
 										<td><%= stock.company_name %></td>
 										<td><%= number_to_currency(stock.latest_price) %></td>
-										<td><%= stock.latest_volume %></td>										
+										<td><%= stock.change_percent_s %></td>						
 										<td><%= link_to "show stock", stock_path(stock.symbol), class: "btn btn-danger" %></td>		
 									</tr>
 								<% end %>							
