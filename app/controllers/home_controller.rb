@@ -40,7 +40,7 @@ class HomeController < ApplicationController
     @user = User.new(email: params[:user][:email], first_name: params[:user][:first_name], last_name: params[:user][:last_name], type: params[:user][:type], password: params[:user][:password], password_confirmation: params[:user][:password_confirmation])
 
     if @user.save
-      redirect_to transaction_home_index_path, alert: 'new user created!'
+      redirect_to root_path, notice: 'new user created!'
     else
       redirect_to root_path, alert: "not saved errors? #{@user.errors.any?}"
     end
@@ -51,12 +51,12 @@ class HomeController < ApplicationController
       @user = User.find(params[:broker][:id])
       @user.update(email: params[:broker][:email], first_name: params[:broker][:first_name], last_name: params[:broker][:last_name])
 
-      redirect_to root_path, notice: 'updated na po sya'
+      redirect_to root_path, notice: 'The user has been updated'
     elsif params[:buyer]
       @user = User.find(params[:buyer][:id])
       @user.update(email: params[:buyer][:email], first_name: params[:buyer][:first_name], last_name: params[:buyer][:last_name])
 
-      redirect_to root_path, notice: 'updated na po sya'
+      redirect_to root_path, notice: 'The user has been updated'
     end
   end
 end

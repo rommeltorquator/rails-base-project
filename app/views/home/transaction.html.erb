@@ -1,42 +1,55 @@
 <% if current_admin %>
   <h1 class="text-center" style="margin-top: 10px;">Overall Transactions</h1>
+  <section class="ftco-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">											
+          <div class="table-wrap">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Buyer</th>
+                  <th>Symbol</th>
+                  <th>Company Name</th>
+                  <th>Current Price</th>
+                  <th>Total Stock purchased</th>
+                  <th>Total Amount</th>
+                  <th>Broker</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% PurchaseTransaction.all.each do |transaction| %>
+                  <tr>
+                    <td><%= transaction.user.first_name + " " + transaction.user.last_name %></td>
+                    <td><%= transaction.stock_code %></td>
+                    <td><%= transaction.company_name %></td>
+                    <td><%= transaction.price %></td>
+                    <td><%= transaction.volume %></td>
+                    <td><%= transaction.volume * transaction.price %></td>
+                    <td><%= transaction.broker.first_name + " " + transaction.broker.last_name %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+				</div>
+			</div>
+		</div>
+	</section>
 <% else %>
   <h1 class="text-center" style="margin-top: 10px;">Transactions</h1>
 <% end%>
 
 <!-- for broker -->
 <% if current_broker && current_broker.approved? %>
-<br/>
-<%= render 'partials/transaction_table_broker'%>
-<br/>
+  <br/>
+  <%= render 'partials/transaction_table_broker'%>
+  <br/>
 <% end %>
 
 <!-- for buyer -->
 <% if current_buyer %>
-<br/>  
-<%= render 'partials/transaction_table_buyers'%>
-<br/>
+  <br/>  
+  <%= render 'partials/transaction_table_buyers'%>
+  <br/>
 <% end %>
-
-
-
-<div class="row">
-  <div class="card-group">
-    <% @transactions.each do |transaction| %>
-      <div class="card" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title"><%= transaction.company_name %></h5>
-          <h6 class="card-subtitle mb-2 text-muted"><%= transaction.stock_code %></h6>
-          <p>value: <%= transaction.volume %></p>
-          <p>total value: <%= transaction.total_value %></p>
-          <p>stock symbol: <%= transaction.stock_code %></p>
-          <p>broker name: <%= transaction.broker_name %></p>
-          <p>buyer id: <%= transaction.user_id %></p>
-          <p>broker id: <%= transaction.broker_id %></p>
-          <p>transaction id: <%= transaction.id %></p>
-          <p>stock id: <%= transaction.stock_id %></p>
-        </div>
-      </div>
-    <% end %>
-  </div>
-</div>

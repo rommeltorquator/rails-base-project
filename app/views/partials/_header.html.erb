@@ -8,22 +8,16 @@
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <% if broker_signed_in? %>
           <li class="nav-item">
-            <%= link_to "Home", root_path, class: "nav-link" %>
-          </li>
+            <%= link_to "Stocks", stocks_path, class: "nav-link" %>
+          </li>  
           <li class="nav-item">
             <%= link_to "Transactions", transaction_home_index_path, class: "nav-link" %>
           </li> 
-          <li class="nav-item">
-            <%= link_to "Stocks", stocks_path, class: "nav-link" %>
-          </li>  
           <li class="nav-item">
             <%= link_to "Portfolio", portfolio_home_index_path, class: "nav-link" %>
           </li>   
           <li class="nav-item">
             <%= link_to "Sign out", destroy_broker_session_path, protocol: 'https', method: :delete, class: "nav-link" %>
-          </li>
-          <li>
-            broker
           </li>
         <% elsif buyer_signed_in? %>
           <li class="nav-item">
@@ -38,9 +32,6 @@
           <li class="nav-item">
             <%= link_to "Sign out", destroy_buyer_session_path, protocol: 'https', method: :delete, class: "nav-link" %>
           </li>
-          <li>
-            buyer
-          </li>
         <% elsif admin_signed_in? %>
           <li class="nav-item">
             <%= link_to "Dashboard", root_path, class: "nav-link" %>
@@ -48,9 +39,6 @@
           <li class="nav-item">
             <%= link_to "Transactions", transaction_home_index_path, class: "nav-link" %>
           </li> 
-          <li class="nav-item">
-            <%= link_to "Portfolio", portfolio_home_index_path, class: "nav-link" %>
-          </li>   
           <li class="nav-item">
             <%= link_to "Sign out", destroy_admin_session_path , protocol: 'https', method: :delete, class: "nav-link" %>
           </li>                   
