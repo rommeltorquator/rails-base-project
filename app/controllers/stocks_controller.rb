@@ -13,13 +13,11 @@ class StocksController < ApplicationController
 
   # broker stocks
   def create
-    @stock_symbols = ["tae"]
+    @stock_symbols = ['tae']
     @quote = @client.quote(params[:id].to_s)
     @portfolio = Stock.create(name: @quote.company_name.to_s, symbol: @quote.symbol.to_s, current_price: @quote.latest_price, user_id: current_broker.id)
 
-    if @portfolio.save
-      redirect_to stocks_path, notice: "Stock has been successfully added to your portfolio"
-    end
+    redirect_to stocks_path, notice: 'Stock has been successfully added to your portfolio' if @portfolio.save
   end
 
   # buyer stocks
@@ -54,9 +52,7 @@ class StocksController < ApplicationController
   # broker stock
   def destroy
     @stock = Stock.find(params[:id])
-    if @stock.destroy
-      redirect_to portfolio_home_index_path, notice: 'Stock has been successfully removed'
-    end
+    redirect_to portfolio_home_index_path, notice: 'Stock has been successfully removed' if @stock.destroy
   end
 
   # buyer stock
@@ -67,6 +63,12 @@ class StocksController < ApplicationController
     else
       redirect_to portfolio_home_index_path
     end
+  end
+
+  def watch
+    # @stock = @client.quote(params[:id].to_s)
+    # session[:watched].push(h)
+    redirect_to stocks_path, notice: 'Stock has been added to watch list'
   end
 
   private

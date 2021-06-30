@@ -111,7 +111,6 @@ GEM
       activesupport (>= 4.2.0)
     hashdiff (1.0.1)
     hashie (4.1.0)
-    hirb (0.7.3)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     iex-ruby-client (1.4.1)
@@ -304,7 +303,6 @@ DEPENDENCIES
   factory_bot_rails
   font-awesome-rails
   font-awesome-sass (~> 5.15.1)
-  hirb (~> 0.7.3)
   iex-ruby-client (~> 1.4, >= 1.4.1)
   jbuilder (~> 2.7)
   listen (~> 3.2)
