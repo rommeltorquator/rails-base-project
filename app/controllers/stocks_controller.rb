@@ -72,7 +72,7 @@ class StocksController < ApplicationController
     @watched_stock = WatchedStock.new(buyer_id: current_buyer.id, symbol: @stock.symbol, avg_total_volume: @stock.avg_total_volume, latest_price: @stock.latest_price, company: @stock.company_name, change_percent_s: @stock.change_percent_s)
 
     @watched_stock.save
-    redirect_to root_path, notice: "Stock has been added to watch list"
+    redirect_to root_path, notice: 'Stock has been added to watch list'
   end
 
   def unwatch
@@ -82,6 +82,7 @@ class StocksController < ApplicationController
   end
 
   private
+
   def fetch_api
     @client = IEX::Api::Client.new(
       publishable_token: ENV['PUBLIC'],
