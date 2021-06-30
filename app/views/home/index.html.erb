@@ -283,14 +283,61 @@
     </div>
     <h1><%= @hope %></h1>
     <br/>
-    <div class="row">
-      <div class="col-md-12 mb-5">
-        <h2 class="bg-primary">Pending broker approval: <%= @pending_approval.count %></h2>
-        <h2 class="bg-secondary">no of transactions: <%= @transactions.count %></h2>
-        <h2 class="bg-success">buyer count: <%= @buyers.count %></h2>
-        <h2 class="bg-warning">broker count: <%= @brokers.count %></h2>
+    
+<div class="container-fluid ">
+  <div class="row row-cols-auto justify-content-center align-items-center">
+    <div class="col">
+      <div class="card text-white bg-primary" style="max-width: 15rem;">
+        <div class="card-header">Header</div>
+          <div class="card-body">
+            <h5 class="card-title">Pending Approval(s):</h5>
+            <p class="card-text">
+               <%= @pending_approval.count %>
+            </p>
+          </div>
+        </div>
+      </div>
+  
+    <div class="col">   
+      <div class="card text-white bg-secondary" style="max-width: 15rem;">
+        <div class="card-header">Header</div>
+          <div class="card-body">
+            <h5 class="card-title">Total Transactions:</h5>
+            <p class="card-text">
+               <%= @transactions.count %>
+            </p>
+          </div>
+        </div>
+      </div>
+  
+    <div class="col">  
+      <div class="card text-white bg-info" style="max-width: 15rem;">
+        <div class="card-header">Header</div>
+          <div class="card-body">
+            <h5 class="card-title">Buyer Count(s):</h5>
+            <p class="card-text">
+               <%= @buyers.count %>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
+
+    <div class="col">
+      <div class="card text-white bg-warning" style="max-width: 15rem;">
+        <div class="card-header">Header</div>
+          <div class="card-body">
+            <h5 class="card-title">Broker Count(s):</h5>
+            <p class="card-text">
+               <%= @brokers.count %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>    
+</div>
+
     <div class="row">
       <div class="col-md-6 bg-success">
         <h1>list of buyers</h1>
