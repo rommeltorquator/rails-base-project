@@ -69,6 +69,12 @@ class StocksController < ApplicationController
     end
   end
 
+  def watch
+    # @stock = @client.quote(params[:id].to_s)  
+    # session[:watched].push(h)
+    redirect_to stocks_path, notice: 'Stock has been added to watch list'
+  end
+
   private
 
   def fetch_api
