@@ -1,49 +1,23 @@
-<h1 class="text-center">lists of fuken stocks! wtf</h1>
-
-<div class="input-group">
-  <div class="form-outline">
-    <input type="search" id="form1" class="form-control" />
-    <label class="form-label" for="form1">Search</label>
-  </div>
-  <button type="button" class="btn btn-primary">
-    <i class="fa fa-trash"></i>
-  </button>
+<h1 class="text-center">stockXchange Marketplace</h1>
+<br/>
+<div class="container">
+    <div class="row height d-flex justify-content-center align-items-center">
+        <div class="col-md-6">
+            <div class="search"> <i class="fa fa-search"></i> <input type="text" class="form-control" placeholder="Start your search"> <button class="btn btn-primary">Search</button> </div>
+        </div>
+    </div>
 </div>
-<br/>
-<br/>
-<br/>
+</div>
 
 <!-- for broker -->
 <% if current_broker && current_broker.approved? %>
-  <div class="card-group">
-    <% @client.stock_market_list(:mostactive).each do |stock| %>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title"><%= stock.symbol %></h5>
-          <h5 class="card-title"><%= stock.company_name %></h5>
-          <h5 class="card-title"><%= stock.iex_last_updated_t %></h5>
-          <p class="card-text"><%= stock.latest_price %></p>
-          <a href="#" class="btn btn-primary"><%= stock.avg_total_volume %></a>
-          <%= link_to "show stock", stock_path(stock.symbol), class: "btn btn-danger" %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+<br/>
+<%= render 'partials/stock_table_broker'%>
+<br/>
 <% end %>
 
-<% if current_buyer %>  
-  <div class="card-group">
-    <% @client.stock_market_list(:mostactive).each do |stock| %>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title"><%= stock.symbol %></h5>
-          <h5 class="card-title"><%= stock.company_name %></h5>
-          <h5 class="card-title"><%= stock.iex_last_updated_t %></h5>
-          <p class="card-text"><%= stock.latest_price %></p>
-          <p class="card-text"><%= stock.avg_total_volume %></p>
-          <%= link_to "show stock", stock_path(stock.symbol), class: "btn btn-danger" %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+<% if current_buyer %>
+<br/>  
+<%= render 'partials/stock_table_buyer'%>
+<br/>
 <% end %>

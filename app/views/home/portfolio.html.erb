@@ -1,49 +1,68 @@
 <% if current_broker && current_broker.approved? %>
-  <h1 class="text-center">Portfolio page for broker</h1>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">name</th>
-        <th scope="col">symbol</th>
-        <th scope="col">latest price</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>      
-      <% current_broker.stocks.each do |stock| %>
-        <tr>
-          <td><%= stock.name %></td>
-          <td><%= stock.symbol %></td>
-          <td><%= stock.current_price %></td>
-          <td><%= button_to "sell stock", stock_path(stock), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+    <h1 class="text-center"><%= current_broker.first_name %>'s Broker Portfolio</h1>
+    <h2 class="text-center"><%= render 'partials/stock_ticker'%></h2>
+  
+  		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table">
+						<table class="table table-striped">
+						  <thead>
+						    <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Symbol</th>
+                  <th scope="col">Latest Price</th>
+                  <th scope="col">Action</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+              <% current_broker.stocks.each do |stock| %>
+                <tr>
+						      <td><%= stock.name %></td>
+                  <td><%= stock.symbol %></td>
+                  <td><%= stock.current_price %></td>
+                  <td><%= button_to "sell stock", stock_path(stock), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+						    </tr>
+              <% end %>
+						  </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
 <% end %>
 
 <% if current_buyer %>
-  <h1 class="text-center">Portfolio page for buyer</h1>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">price</th>
-        <th scope="col">quantity</th>
-        <th scope="col">symbol</th>
-        <th scope="col">broker</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>      
-      <% current_buyer.buyer_stocks.each do |stock| %>
-        <tr>
-          <td><%= stock.price %></td>
-          <td><%= stock.quantity %></td>
-          <td><%= stock.stockSymbol %></td>
-          <td><%= stock.broker_email %></td>
-          <td><%= button_to "sell stock", sell_buyer_stock_stocks_path(stock), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+<h1 class="text-center"><%= current_buyer.first_name %>'s Buyer Portfolio</h1>
+    <h2 class="text-center"><%= render 'partials/stock_ticker'%></h2>
+  
+  		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table">
+						<table class="table table-striped">
+						  <thead>
+						    <tr>
+                  <th scope="col">Price</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Symbol</th>
+                  <th scope="col">broker</th>
+                </tr>
+              </thead>
+              <tbody>      
+            <% current_buyer.buyer_stocks.each do |stock| %>
+                <tr>
+                  <td><%= stock.price %></td>
+                  <td><%= stock.quantity %></td>
+                  <td><%= stock.stockSymbol %></td>
+                  <td><%= stock.broker_email %></td>
+                  <td><%= button_to "sell stock", sell_buyer_stock_stocks_path(stock), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                </tr>
+            <% end %>
+						  </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
 <% end %>

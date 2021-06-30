@@ -1,9 +1,24 @@
-
 <% if current_admin %>
-  <h1>Overall Transactions</h1>
+  <h1 class="text-center" style="margin-top: 10px;">Overall Transactions</h1>
 <% else %>
-  <h1>Transactions</h1>
+  <h1 class="text-center" style="margin-top: 10px;">Transactions</h1>
 <% end%>
+
+<!-- for broker -->
+<% if current_broker && current_broker.approved? %>
+<br/>
+<%= render 'partials/transaction_table_broker'%>
+<br/>
+<% end %>
+
+<!-- for buyer -->
+<% if current_buyer %>
+<br/>  
+<%= render 'partials/transaction_table_buyers'%>
+<br/>
+<% end %>
+
+
 
 <div class="row">
   <div class="card-group">
