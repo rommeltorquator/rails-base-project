@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_21_010849) do
+ActiveRecord::Schema.define(version: 2021_06_30_142448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,8 +86,21 @@ ActiveRecord::Schema.define(version: 2021_06_21_010849) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  create_table "watched_stocks", force: :cascade do |t|
+    t.bigint "buyer_id", null: false
+    t.string "symbol"
+    t.string "company"
+    t.decimal "latest_price"
+    t.decimal "avg_total_volume"
+    t.string "change_percent_s"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["buyer_id"], name: "index_watched_stocks_on_buyer_id"
+  end
+
   add_foreign_key "buyer_stocks", "users"
   add_foreign_key "purchase_transactions", "users"
   add_foreign_key "purchase_transactions", "users", column: "broker_id"
   add_foreign_key "stocks", "users"
+  add_foreign_key "watched_stocks", "users", column: "buyer_id"
 end

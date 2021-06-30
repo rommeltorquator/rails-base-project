@@ -1,6 +1,7 @@
 class Broker < User
   before_create :unapprove_broker
   before_create :pending_approval_notification
+  has_many :purchase_transactions
 
   private
 

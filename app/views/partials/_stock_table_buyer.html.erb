@@ -20,7 +20,14 @@
 										<td><%= stock.company_name %></td>
 										<td><%= number_to_currency(stock.latest_price) %></td>
 										<td><%= stock.avg_total_volume %></td>					
-										<td><%= link_to "show stock", stock_path(stock.symbol), class: "btn btn-danger" %> | <%= link_to "Watch", watch_stocks_path(stock.symbol), class: "btn btn-success" %></td>
+										<td>
+										<%= link_to "show stock", stock_path(stock.symbol), class: "btn btn-success" %> 
+										<% if current_buyer.watched_stocks.find_by(symbol: stock.symbol).nil? %>
+											| <%= link_to "Watch", watch_stocks_path(:symbol => stock.symbol), class: "btn btn-warning" %>
+										<% else %>
+											| <%= link_to "Unwatch", unwatch_stocks_path(:symbol => stock.symbol), class: "btn btn-danger" %>
+										<% end %>
+										</td>
 									</tr>
 								<% end %>
 						  </tbody>
