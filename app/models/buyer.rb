@@ -1,6 +1,6 @@
 class Buyer < User
   before_create :approved_email
-  has_many :watched_stocks  
+  has_many :watched_stocks, dependent: :nullify
 
   private
 
