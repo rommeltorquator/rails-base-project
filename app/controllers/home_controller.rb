@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  before_action :fetch_api, only: %i[portfolio]
+
   def index
     @hope = 'Hope is the anchor of the soul'
     @brokers = Broker.all
@@ -58,5 +60,15 @@ class HomeController < ApplicationController
 
       redirect_to root_path, notice: 'The user has been updated'
     end
+  end
+
+  private
+
+  def fetch_api
+    @client = IEX::Api::Client.new(
+      publishable_token: ENV['PUBLIC'],
+      secret_token: ENV['SECRET'],
+      endpoint: 'https://sandbox.iexapis.com/v1'
+    )
   end
 end

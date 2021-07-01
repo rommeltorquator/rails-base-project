@@ -9,10 +9,11 @@
             <table class="table table-striped">
               <thead>
                 <tr>
+                  <th>Transaction type</th>
                   <th>Buyer</th>
                   <th>Symbol</th>
                   <th>Company Name</th>
-                  <th>Current Price</th>
+                  <th>Price</th>
                   <th>Total Stock purchased</th>
                   <th>Total Amount</th>
                   <th>Broker</th>
@@ -21,13 +22,14 @@
               <tbody>
                 <% PurchaseTransaction.all.each do |transaction| %>
                   <tr>
-                    <td><%= transaction.user.first_name + " " + transaction.user.last_name %></td>
+                    <td><%= transaction.transaction_type %></td>
+                    <td><%= link_to transaction.user.first_name + " " + transaction.user.last_name, show_user_home_index_path(transaction.user_id) %></td>
                     <td><%= transaction.stock_code %></td>
                     <td><%= transaction.company_name %></td>
                     <td><%= transaction.price %></td>
                     <td><%= transaction.volume %></td>
                     <td><%= transaction.volume * transaction.price %></td>
-                    <td><%= transaction.broker.first_name + " " + transaction.broker.last_name %></td>
+                    <td><%= link_to transaction.broker.first_name + " " + transaction.broker.last_name, show_user_home_index_path(transaction.broker_id) %></td>
                   </tr>
                 <% end %>
               </tbody>

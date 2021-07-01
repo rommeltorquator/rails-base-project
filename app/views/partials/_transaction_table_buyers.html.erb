@@ -1,4 +1,4 @@
-<section class="ftco-section">
+<section>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
@@ -6,11 +6,12 @@
 					<div class="table-wrap">
 						<table class="table table-striped">
 						  <thead>
-						    <tr>
+						    <tr>									
+                  <th>Transaction type</th>
 						      <th>Buyer</th>
 						      <th>Symbol</th>
 						      <th>Company Name</th>
-						      <th>Current Price</th>
+						      <th>Price</th>
                   <th>Total Stock purchased</th>
                   <th>Total Amount</th>
                   <th>Broker</th>
@@ -19,6 +20,7 @@
 						  <tbody>
 								<% current_buyer.purchase_transactions.each do |transaction| %>
 									<tr>
+										<td><%= transaction.transaction_type %></td>
 										<td><%= transaction.user.first_name + " " + transaction.user.last_name %></td>
 										<td><%= transaction.stock_code %></td>
 										<td><%= transaction.company_name %></td>

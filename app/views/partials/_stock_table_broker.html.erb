@@ -1,4 +1,4 @@
-<section class="ftco-section">
+<section>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
@@ -19,7 +19,7 @@
 										<td><%= stock.symbol %></td>
 										<td><%= stock.company_name %></td>
 										<td><%= number_to_currency(stock.latest_price) %></td>
-										<td><%= stock.latest_volume %></td>
+										<td><%= stock.avg_total_volume %></td>	
 										<% if current_broker.stocks.find_by(symbol: stock.symbol).nil? %>
 											<td><%= button_to "Add to portfolio", stocks_path(id: stock.symbol), class: "btn btn-success", method: :post %></td>											
 										<% else %>
