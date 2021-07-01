@@ -1,5 +1,8 @@
-<div class="container" style="margin-top: 100px; width: 40vw">
-<h2>Sign up</h2>
+<div class="container bg-light" style="margin-top: 100px; width: 35vw">
+  <div class="row">
+		<div class="span4 offset4 well">
+      <h1 class="text-center">Sign Up</h1>
+      <hr class="border border-4 colorgraph" style="margin-top: 10px;">
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
@@ -33,13 +36,14 @@
   </div>
 
   <div class="actions">
-    <%= f.submit "Sign up", class:"btn btn-danger" %>  
+    <%= f.submit "Sign up", class:"btn btn-danger btn-lg btn-block" %>  
   </div>
 <% end %>
 <br/>
-<br/>
 Already have an account with us? 
 <%= render "devise/shared/links" %>
+</div>
+</div>
 </div>
 <footer class="text-center text-white fixed-bottom" style="background-color: #21081a;">
   <%= render 'partials/footer_slim'%>

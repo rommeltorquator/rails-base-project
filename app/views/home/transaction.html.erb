@@ -1,10 +1,11 @@
 <% if current_admin %>
   <h1 class="text-center" style="margin-top: 10px;">Overall Transactions</h1>
+  <hr class="border border-3 colorgraph" style="margin-top: 10px;">
   <section class="ftco-section">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">											
-          <div class="table-wrap">
+          <div class="table">
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -38,18 +39,19 @@
 	</section>
 <% else %>
   <h1 class="text-center" style="margin-top: 10px;">Transactions</h1>
+  <hr class="border border-3 colorgraph" style="margin-top: 10px;">
 <% end%>
 
 <!-- for broker -->
 <% if current_broker && current_broker.approved? %>
-  <br/>
+  
   <%= render 'partials/transaction_table_broker'%>
   <br/>
 <% end %>
 
 <!-- for buyer -->
 <% if current_buyer %>
-  <br/>  
+   
   <%= render 'partials/transaction_table_buyers'%>
   <br/>
 <% end %>
