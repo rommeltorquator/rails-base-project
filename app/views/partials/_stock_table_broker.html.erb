@@ -1,4 +1,4 @@
-<section class="ftco-section">
+
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
@@ -31,6 +31,36 @@
 						</table>
 					</div>
 				</div>
+
+				<div class="col-md-12">
+					<div class="table-wrap">
+						<table class="table table-striped">
+						  <thead>
+						    <tr>
+						      <th>Symbol</th>
+						      <th>Company Name</th>
+						      <th>Latest Price</th>
+						      <th>Avg total volume</th>
+						      <th>Action</th>
+						    </tr>
+						  </thead>							
+						  <tbody>								
+								<% @client.stock_market_list(:gainers).each do |stock| %>
+									<tr>
+										<td><%= stock.symbol %></td>
+										<td><%= stock.company_name %></td>
+										<td><%= number_to_currency(stock.latest_price) %></td>
+										<td><%= stock.latest_volume %></td>
+										<% if current_broker.stocks.find_by(symbol: stock.symbol).nil? %>
+											<td><%= button_to "Add to portfolio", stocks_path(id: stock.symbol), class: "btn btn-success", method: :post %></td>											
+										<% else %>
+											<td><h5>Already added to your portfolio</h5></td>
+										<% end %>
+									</tr>
+								<% end %>							
+						  </tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
-	</section>

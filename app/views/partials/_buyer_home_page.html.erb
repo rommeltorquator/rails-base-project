@@ -1,6 +1,6 @@
-<h1 class="text-center"><%= current_buyer.first_name %>'s Buyer Dashboard</h1>
+<h1 class="text-center" style="margin-top: 10px;"><%= current_buyer.first_name %>'s Buyer Dashboard</h1>
 <h2 class="text-center"><%= render 'partials/stock_ticker'%></h2>
-
+<hr class="border border-3 colorgraph" style="margin-top: 10px;">
 <!-- 1st table transactions -->
 <div class="container">
   <div class="card">
@@ -26,7 +26,7 @@
           </thead>
           <tbody>
             <% current_buyer.purchase_transactions.limit(3).each do |transaction| %>
-              <tr class="table-active">
+              <tr class="table-striped">
                 <td><%= transaction.user.first_name + " " + transaction.user.last_name %></td>
                 <td><%= transaction.stock_code %></td>
                 <td><%= transaction.company_name %></td>
@@ -73,7 +73,7 @@
 
               <tbody>
                 <% current_buyer.watched_stocks.each do |stock| %>
-                  <tr class="table-active">
+                  <tr class="table-striped">
                     <td><%= stock.symbol %></td>
                     <td><%= stock.company %></td>
                     <td><%= stock.latest_price  %></td>
@@ -116,7 +116,7 @@
           </thead>
           <tbody>
             <% current_buyer.buyer_stocks.limit(3).each do |stock| %>
-              <tr class="table-active">
+              <tr class="table-striped">
                 <td><%= stock.stockSymbol %></td>
                 <td><%= stock.price %></td>
                 <td><%= stock.quantity %></td>
