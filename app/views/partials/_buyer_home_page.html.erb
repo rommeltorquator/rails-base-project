@@ -1,6 +1,36 @@
 <h1 class="text-center"><%= current_buyer.first_name %>'s Buyer Dashboard</h1>
 <h2 class="text-center"><%= render 'partials/stock_ticker'%></h2>
 
+<div class="container">
+  <div class="row my-3">
+    <div class="offset-md-3 col-md-6 d-flex align-items-center justify-content-between p-2" style="border: 2px solid #666;">
+      <h3>You cash: <%= current_buyer.cash.amount.to_f %></h3>
+      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%= current_buyer.id %>">Add cash</button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop<%= current_buyer.id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel<%= current_buyer.id %>" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel<%= current_buyer.id %>">Cash in</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <%= form_with url: cash_in_stocks_path, method: "patch", local: true do |form| %>
+              <div class="mb-3">
+                <%= form.number_field :amount, class: "form-control" %>
+                <br/>
+                <%= form.submit class: "btn btn-danger" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- 1st table transactions -->
 <div class="container">
   <div class="card">

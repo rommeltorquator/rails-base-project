@@ -22,7 +22,7 @@
 										<td><%= stock.name %></td>
 										<td><%= stock.symbol %></td>
 										<td><%= stock.current_price %></td>
-										<td><%= button_to "sell stock", stock_path(stock), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
+										<td><%= button_to "Remove stock", stock_path(stock), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
 									</tr>
 								<% end %>
 								</tbody>
@@ -50,19 +50,25 @@
 									<thead>
 										<tr>
 											<th scope="col">Symbol</th>
-											<th scope="col">Price</th>
+											<th scope="col">Broker email</th>
+											<th scope="col">Bought stock price</th>
 											<th scope="col">Quantity</th>
-											<th scope="col">broker</th>
+											<th scope="col">Total amount</th>
+											<th scope="col"><strong>Current Stock Price</strong></th>
+											<th scope="col"></th>
 										</tr>
 									</thead>
 									<tbody>      
 								<% current_buyer.buyer_stocks.each do |stock| %>
 										<tr>
 											<td><%= stock.stockSymbol %></td>
+											<td><%= stock.broker_email %></td>
 											<td><%= stock.price %></td>
 											<td><%= stock.quantity %></td>
-											<td><%= stock.broker_email %></td>
-											<td><%= button_to "sell stock", sell_buyer_stock_stocks_path(stock), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+											<td><%= stock.quantity * stock.price %></td>
+
+											<td><%= @client.quote(stock.stockSymbol).latest_price.to_f %></td>
+											<td><%= button_to "sell stock", sell_buyer_stock_stocks_path(stock, price: @client.quote(stock.stockSymbol).latest_price.to_f), method: :delete, data: { confirm: 'Are you sure?' } %></td>
 										</tr>
 								<% end %>
 									</tbody>
