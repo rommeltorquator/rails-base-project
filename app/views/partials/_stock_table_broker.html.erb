@@ -1,7 +1,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<div class="table-wrap">
+					<div class="table">
 						<table class="table table-striped">
 						  <thead>
 						    <tr>
@@ -22,7 +22,7 @@
 										<% if current_broker.stocks.find_by(symbol: stock.symbol).nil? %>
 											<td><%= button_to "Add to portfolio", stocks_path(id: stock.symbol), class: "btn btn-success", method: :post %></td>											
 										<% else %>
-											<td><h5>Already added to your portfolio</h5></td>
+											<td>Already added to your portfolio</td>
 										<% end %>
 									</tr>
 								<% end %>							
@@ -32,7 +32,7 @@
 				</div>
 
 				<div class="col-md-12">
-					<div class="table-wrap">
+					<div class="table">
 						<table class="table table-striped">
 						  <thead>
 						    <tr>
@@ -53,7 +53,7 @@
 										<% if current_broker.stocks.find_by(symbol: stock.symbol).nil? %>
 											<td><%= button_to "Add to portfolio", stocks_path(id: stock.symbol), class: "btn btn-success", method: :post %></td>											
 										<% else %>
-											<td><h5>Already added to your portfolio</h5></td>
+											<td>Already added to your portfolio</td>
 										<% end %>
 									</tr>
 								<% end %>							

@@ -1,4 +1,4 @@
-<h1 class="text-center" style="margin-top: 10px;"><%= current_broker.first_name %>'s Buyer Dashboard</h1>
+<h1 class="text-center" style="margin-top: 10px;"><%= current_broker.first_name %>'s Broker Dashboard</h1>
 <h2 class="text-center"><%= render 'partials/stock_ticker'%></h2>
 <hr class="border border-3 colorgraph" style="margin-top: 10px;">
 <!-- 1st table transactions -->
@@ -27,16 +27,29 @@
             </thead>
             <tbody class="table-striped">
               <% current_broker.purchase_transactions.limit(3).each do |transaction| %>
+                <% if transaction.transaction_type == ('buy')  %>
                 <tr class="table-striped">
                   <td><%= transaction.id %></td>
                   <td><%= transaction.user.first_name + " " + transaction.user.last_name %></td>
                   <td><%= transaction.stock_code %></td>
                   <td><%= transaction.company_name %></td>
                   <td><%= transaction.price %></td>
-                  <td><%= transaction.volume %></td>
-                  <td><%= transaction.volume * transaction.price %></td>
+                  <td class="text-success"><%= transaction.volume %></td>
+                  <td class="text-success"><%= transaction.volume * transaction.price %></td>
                   <td><%= transaction.broker.first_name + " " + transaction.broker.last_name %></td>
                 </tr>
+                <% else transaction.transaction_type == ('sell')  %>
+                <tr class="table-striped">
+                  <td><%= transaction.id %></td>
+                  <td><%= transaction.user.first_name + " " + transaction.user.last_name %></td>
+                  <td><%= transaction.stock_code %></td>
+                  <td><%= transaction.company_name %></td>
+                  <td><%= transaction.price %></td>
+                  <td class="text-danger"><%= transaction.volume %></td>
+                  <td class="text-danger"><%= transaction.volume * transaction.price %></td>
+                  <td><%= transaction.broker.first_name + " " + transaction.broker.last_name %></td>
+                </tr>
+                <% end %>
               <% end %>
             </tbody>
           </table>

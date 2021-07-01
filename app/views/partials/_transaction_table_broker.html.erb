@@ -4,7 +4,7 @@
 				<div class="col-md-12">
 					<%# if current_broker%>
 						<% if PurchaseTransaction.where(broker_id: current_broker.id).count > 0 %>
-							<div class="table-wrap">
+							<div class="table">
 								<table class="table table-striped">
 									<thead>
 										<tr>
@@ -19,15 +19,27 @@
 									</thead>
 									<tbody>
 										<% PurchaseTransaction.where(broker_id: current_broker.id).each do |transaction| %>
+										<% if transaction.transaction_type == ('sell')  %>
 											<tr>
 												<td><%= transaction.user.first_name + " " + transaction.user.last_name %></td>
 												<td><%= transaction.stock_code %></td>
 												<td><%= transaction.company_name %></td>
 												<td><%= transaction.price %></td>
-												<td><%= transaction.volume %></td>
-												<td><%= transaction.volume * transaction.price %></td>
+												<td class="text-success"><%= transaction.volume %></td>
+												<td class="text-danger"><%= transaction.volume * transaction.price %></td>
 												<td><%= transaction.broker.first_name + " " + transaction.broker.last_name %></td>
 											</tr>
+											<% else transaction.transaction_type == ('buy')  %>
+											<tr>
+                        <td><%= transaction.user.first_name + " " + transaction.user.last_name %></td>
+                        <td><%= transaction.stock_code %></td>
+                        <td><%= transaction.company_name %></td>
+                        <td><%= transaction.price %></td>
+                        <td class="text-danger"><%= transaction.volume %></td>
+                        <td class="text-success"><%= transaction.volume * transaction.price %></td>
+                        <td><%= transaction.broker.first_name + " " + transaction.broker.last_name %></td>
+                      </tr>
+                     <% end %>
 										<% end %>
 									</tbody>
 								</table>
