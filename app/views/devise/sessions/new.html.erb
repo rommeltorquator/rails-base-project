@@ -1,5 +1,8 @@
-<div class="container" style="margin-top: 100px">
-<h2>Log in</h2>
+<div class="container bg-light" style="margin-top: 100px; width: 35vw">
+  <div class="row">
+		<div class="span4 offset4 well">
+      <h1 class="text-center">Log in</h1>
+      <hr class="border border-4 colorgraph" style="margin-top: 10px;">
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="input-group mb-3">
@@ -20,12 +23,14 @@
   <% end %>
 
   <div class="actions">
-    <%= f.submit "Log In", class:"btn btn-danger" %>  
+    <%= f.submit "Log In", class:"btn btn-danger btn-lg btn-block" %>  
   </div>
 <% end %>
 <br/>
 Dont have an account with us? Or you may have forgotten your password. 
 <%= render "devise/shared/links" %>
+</div>
+</div>
 </div>
 <footer class="text-center text-white fixed-bottom" style="background-color: #21081a;">
   <%= render 'partials/footer_slim'%>
