@@ -1,39 +1,42 @@
 <div class="container border border-0" style="margin-top: 10px;">
-  <h1 class="text-center"><%= @stock.company_name %></h1>
+  <h1 class="text-center"><%= @stock.company_name %> Details</h1>
   <hr class="border border-3 colorgraph" style="margin-top: 10px;">
-
 
 <div class="container">
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-8" style="margin-top:100px;">
       <!-- for buyer -->
-
+      <div class="card text-dark bg-light border-border-2">
       <% if current_buyer %>
-        <h1>Name: <%= @stock.company_name %></h1><br/>
-        <h2>Symbol: <%= @stock.symbol %></h2><br/>
-        <h2>Latest price: <%= number_to_currency(@stock.latest_price) %></h2><br/>
-        <h2>Change: <%= number_to_currency(@stock.change) %></h2><br/>
-        <h2>Change Percent: <%= @stock.change_percent_s %></h2><br/>
-        <h2>Average Total Volume: <%= @stock.avg_total_volume %></h2><br/>
-        <h2>Price As Of: <%= @stock.latest_time %></h2><br/>
+        <h2>Name: <%= @stock.company_name %></h2><br/>
+        <h3>Symbol: <%= @stock.symbol %></h3><br/>
+        <h4 style="margin-left: 10px;">Latest price: <%= number_to_currency(@stock.latest_price) %></h4><br/>
+        <h4 style="margin-left: 10px;">Change: <%= number_to_currency(@stock.change) %></h4><br/>
+        <h4 style="margin-left: 10px;">Change Percent: <%= @stock.change_percent_s %></h4><br/>
+        <h4 style="margin-left: 10px;">Average Total Volume: <%= @stock.avg_total_volume %></h4><br/>
+        <h4 style="margin-left: 10px;">Price As Of: <%= @stock.latest_time %></h4><br/>
+        <br/>
+        <br/>
       <% end %>
+      </div>
     </div>
 
     <div class="col-md-4">
+      <div class="card text-dark bg-light border-border-2">
       <% if current_buyer %>
         <h1 class="text-center">Top brokers</h1>
         <hr class="border border-3 colorgraph" style="margin-top: 10px;">
           <% @brokers.each do |broker| %>
             <% if broker.stocks.where(symbol: @stock.symbol.to_s).any? %>
               <h2>Broker ID: <%= broker.id %></h2>
-              <p>Has In Stocks: <%= broker.stocks.where(symbol: @stock.symbol.to_s).any? %></p>
-              <p>Email: <%= broker.email %></p>
-              <p>First Name: <%= broker.first_name %></p>
-              <p>Last Name: <%= broker.last_name %></p>
-              <p>Number of stocks: <%= broker.stocks.count %></p>
-              <p>Total Deals Brokered: <%= PurchaseTransaction.where(broker_id: broker).count %></p>
-              <p>total Brokered amount: $3,000,000,000</p>
-              <p>Rating: 100%</p>
+              <p style="margin-left: 5px;">Has In Stocks: <%= broker.stocks.where(symbol: @stock.symbol.to_s).any? %></p>
+              <p style="margin-left: 10px;">Email: <%= broker.email %></p>
+              <p style="margin-left: 10px;">First Name: <%= broker.first_name %></p>
+              <p style="margin-left: 10px;">Last Name: <%= broker.last_name %></p>
+              <p style="margin-left: 10px;">Number of stocks: <%= broker.stocks.count %></p>
+              <p style="margin-left: 10px;">Total Deals Brokered: <%= PurchaseTransaction.where(broker_id: broker).count %></p>
+              <p style="margin-left: 10px;">total Brokered amount: $3,000,000,000</p>
+              <p style="margin-left: 10px;">Rating: 100%</p>
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%= broker.id %>">buy stock</button>
               <hr class="border border-3 colorgraph" style="margin-top: 10px;">
 
@@ -62,6 +65,7 @@
                           <%= form.submit class: "btn btn-danger" %>
                         </div>
                       <% end %>
+                      </div>
                     </div>
                   </div>
                 </div>

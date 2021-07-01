@@ -15,3 +15,16 @@
  *= require_tree .
  *= require_self
  */
+
+ html {
+  max-width: 100%;
+  overflow-x: hidden;
+  height: 100vh;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  height: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
