@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     collection do
       get 'watch', to: "stocks#watch"
       get 'unwatch', to: "stocks#unwatch"
+      patch 'cash_in', to: "stocks#cash_in"
       post 'add_stock'
       delete 'sell_buyer_stock/:id', to: "stocks#destroy_buyer_stock", as: "sell_buyer_stock"      
     end
