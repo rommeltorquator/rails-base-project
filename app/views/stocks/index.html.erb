@@ -1,5 +1,5 @@
-<h1 class="text-center">stockXchange Marketplace</h1>
-<br/>
+<h1 class="text-center" style="margin-top: 10px;">stockXchange Marketplace</h1>
+  <hr class="border border-3 colorgraph" style="margin-top: 10px;">
 <!-- search bar 
 <div class="container">
     <div class="row height d-flex justify-content-center align-items-center">
@@ -11,13 +11,13 @@
 -->
 <!-- for broker -->
 <% if current_broker && current_broker.approved? %>
-    <br/>
+
     <%= render 'partials/stock_table_broker'%>
     <br/>
 <% end %>
 
 <% if current_buyer %>    
-    <br/>  
+
     <%= render 'partials/stock_table_buyer'%>
     <br/>
 <% end %>

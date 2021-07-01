@@ -1,6 +1,7 @@
 <% if current_broker && current_broker.approved? %>
-    <h1 class="text-center"><%= current_broker.first_name %>'s Portfolio</h1>
-    <h2 class="text-center"><%= render 'partials/stock_ticker'%></h2>
+    <h1 class="text-center" style="margin-top: 10px;"><%= current_broker.first_name %>'s Portfolio</h1>
+      <h2 class="text-center"><%= render 'partials/stock_ticker'%></h2>
+		    <hr class="border border-3 colorgraph" style="margin-top: 10px;">
   
 		<% if current_broker.stocks.count > 0 %>
   		<div class="container">
@@ -38,8 +39,9 @@
 <% end %>
 
 <% if current_buyer %>
-	<h1 class="text-center"><%= current_buyer.first_name %>'s Buyer Portfolio</h1>
+	<h1 class="text-center" style="margin-top: 10px;"><%= current_buyer.first_name %>'s Buyer Portfolio</h1>
     <h2 class="text-center"><%= render 'partials/stock_ticker'%></h2>
+		  <hr class="border border-3 colorgraph" style="margin-top: 10px;">
 
 			<% if current_buyer.buyer_stocks.count > 0 %>
 				<div class="container">
