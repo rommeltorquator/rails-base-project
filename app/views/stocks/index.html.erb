@@ -11,13 +11,11 @@
 -->
 <!-- for broker -->
 <% if current_broker && current_broker.approved? %>
-
     <%= render 'partials/stock_table_broker'%>
     <br/>
 <% end %>
 
 <% if current_buyer %>    
-
     <%= render 'partials/stock_table_buyer'%>
     <br/>
 <% end %>

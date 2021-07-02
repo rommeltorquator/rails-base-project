@@ -1,72 +1,78 @@
-<h1 class="text-center"><%= @stock.company_name %></h1>
-
-<br/>
-<br/>
-<br/>
-
 <div class="container">
-  <div class="row">
-    <div class="col-md-8">
-      <!-- for buyer -->
-      <% if current_buyer %>
-        <h1>name: <%= @stock.company_name %></h1><br/>
-        <h1>symbol: <%= @stock.symbol %></h1><br/>
-        <h1>latest price: <%= number_to_currency(@stock.latest_price) %></h1><br/>
-        <h1>change: <%= number_to_currency(@stock.change) %></h1><br/>
-        <h1>change percent: <%= @stock.change_percent_s %></h1><br/>
-        <h1>avg total volume: <%= @stock.avg_total_volume %></h1><br/>
-        <h1>price as of: <%= @stock.latest_time %></h1><br/>
-      <% end %>
-    </div>
-
-    <div class="col-md-4">
-      <% if current_buyer %>
-        <h1>Top brokers</h1>
-          <% @brokers.each do |broker| %>
-            <% if broker.stocks.where(symbol: @stock.symbol.to_s).any? %>
-              <h1>broker id: <%= broker.id %></h1>
-              <p><%= broker.stocks.where(symbol: @stock.symbol.to_s).any? %></p>
-              <p><%= broker.email %></p>
-              <p><%= broker.first_name %></p>
-              <p><%= broker.last_name %></p>
-              <p>number of stocks: <%= broker.stocks.count %></p>
-              <p>total brokered deal: <%= PurchaseTransaction.where(broker_id: broker).count %></p>
-              <p>total Brokered amount: $3,000,000,000</p>
-              <p>Rating: 100%</p>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%= broker.id %>">buy stock</button>
-              <hr/>
-
-              <!-- Modal -->
-              <div class="modal fade" id="staticBackdrop<%= broker.id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel<%= broker.id %>" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="staticBackdropLabel<%= broker.id %>">Modal title</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <%= form_with url: add_stock_stocks_path, local: true do |form| %>
-                        <div class="mb-3">                      
-                          <%= form.number_field :quantity, class: "form-control" %>
-                          <p>Current stock price: <%= @stock.latest_price %></p>
-                          <!-- current_buyer -->
-                          <%= form.hidden_field :price, :value => @stock.latest_price %>
-                          <%= form.hidden_field :stock_symbol, :value => @stock.symbol.to_s %>
-                          <%= form.hidden_field :broker_id, :value => broker.id %>
-                          <%= form.hidden_field :broker_email, :value => broker.email %>
-                          <%= form.hidden_field :broker_name, :value => broker.first_name + ' ' + broker.last_name %>
-                          <%= form.hidden_field :stock_id, :value => broker.stocks.where(symbol: @stock.symbol.to_s).first.id %>
-                          <%= form.hidden_field :company_name, :value => @stock.company_name %>
-                          <%= form.submit class: "btn btn-danger" %>
-                        </div>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <% end %>
-        <% end %> <!-- end of loop -->
-      <% end %> <!--end of current buyer if condition -->
+  <div class="row my-3">
+    <div class="offset-md-3 col-md-6 p-5" style="border: 3px solid #d3d3d3;">
+      <strong><h4><%= @stock.company_name %> (<%= @stock.symbol %>)</h4></strong>
+      <p><%= @stock.primary_exchange %></p>
+      <h2><%= number_to_currency(@stock.latest_price) %> <span class="<%= @stock.change_percent_s[0] == '+' ? 'text-success' : 'text-danger' %>">(<%= @stock.change_percent_s %>)</span></h2>
+      <p>Change: <strong><%= @stock.change %></strong></p>
+      <p>Avg total volume: <strong><%= @stock.avg_total_volume %></strong></p>
+      <p>Price as of: <strong><%= @stock.latest_time %></strong></p>
     </div>
   </div>
 </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <% if current_buyer %>
+        <h1 class="text-center">Top brokers</h1>
+        <table class="table table-striped" style="border: 1px solid #d3d3d3;">
+          <thead>
+            <tr>									
+              <th>Full name</th>                  
+              <th>Number of stocks</th>                  
+              <th>Total brokered deal</th>                  
+              <th>Total brokered amount</th>     
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @brokers.each do |broker| %>
+              <% if broker.stocks.where(symbol: @stock.symbol.to_s).any? %>
+                <tr>
+                  <td><%= broker.first_name.capitalize %></td>
+                  <td><%= broker.stocks.count %></td>
+                  <td><%= broker.purchase_transactions.count %></td>
+                  <td><%= number_to_currency(broker.purchase_transactions.all.total_brokered_deal.round(2))  %></td>
+                  <td>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%= broker.id %>">buy stock</button>
+                  </td>										
+                </tr>
+
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop<%= broker.id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel<%= broker.id %>" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel<%= broker.id %>">Buy Stock</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <%= form_with url: add_stock_stocks_path, local: true do |form| %>
+                          <div class="mb-3">                      
+                            <%= form.number_field :quantity, class: "form-control" %>
+                            <p>Current stock price: <%= @stock.latest_price %></p>
+                            <!-- current_buyer -->
+                            <%= form.hidden_field :price, :value => @stock.latest_price %>
+                            <%= form.hidden_field :stock_symbol, :value => @stock.symbol.to_s %>
+                            <%= form.hidden_field :broker_id, :value => broker.id %>
+                            <%= form.hidden_field :broker_email, :value => broker.email %>
+                            <%= form.hidden_field :broker_name, :value => broker.first_name + ' ' + broker.last_name %>
+                            <%= form.hidden_field :stock_id, :value => broker.stocks.where(symbol: @stock.symbol.to_s).first.id %>
+                            <%= form.hidden_field :company_name, :value => @stock.company_name %>
+                            <%= form.submit class: "btn btn-danger" %>
+                          </div>
+                        <% end %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>              
+            <% end %>
+          </tbody>
+        </table>
+      <% end %> <!--end of current buyer if condition -->
+    </div>
+  </div>
+</div> <!-- container -->

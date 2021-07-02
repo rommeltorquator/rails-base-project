@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_action :fetch_api, only: %i[portfolio]
+  before_action :fetch_api, only: %i[portfolio index]
 
   def index
     @hope = 'Hope is the anchor of the soul'
@@ -8,13 +8,14 @@ class HomeController < ApplicationController
     @pending_approval = User.where(approved: false)
     @transactions = PurchaseTransaction.all
     @new_user = User.new
+    @tae = 'tae'
   end
 
   def portfolio; end
 
   def transaction
     @transactions = if current_buyer
-                      current_buyer.purchase_transactions
+                      current_buyer.purchase_transactions.order(:id, :desc)
                     elsif current_broker
                       PurchaseTransaction.where(broker_id: current_broker.id)
                     elsif current_admin

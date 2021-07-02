@@ -8,21 +8,24 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="table">
-							<table class="table table-striped">
+							<table class="table table-striped" style="border: 1px solid #d3d3d3;">
 								<thead>
 									<tr>
 										<th scope="col">Name</th>
 										<th scope="col">Symbol</th>
-										<th scope="col">Latest Price</th>
+										<th scope="col"><strong>Current Stock Price</strong></th>
 										<th scope="col">Action</th>
 									</tr>
 								</thead>
 								<tbody>
-								<% current_broker.stocks.each do |stock| %>
+								<% current_broker.stocks.order(id: :desc).each do |stock| %>
 									<tr>
+										<% @latest_price = @client.quote(stock.symbol).latest_price.to_f %>
 										<td><%= stock.name %></td>
 										<td><%= stock.symbol %></td>
-										<td><%= stock.current_price %></td>
+
+										<td class="<%= stock.current_price > @latest_price ? "text-danger" : "text-success" %>"><%= @latest_price.round(2) %></td>
+
 										<td><%= button_to "Remove stock", stock_path(stock), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
 									</tr>
 								<% end %>
@@ -39,7 +42,7 @@
 <% end %>
 
 <% if current_buyer %>
-	<h1 class="text-center" style="margin-top: 10px;"><%= current_buyer.first_name %>'s Buyer Portfolio</h1>
+	<h1 class="text-center" style="margin-top: 10px;"><%= current_buyer.first_name %>'s Portfolio</h1>
     <h2 class="text-center"><%= render 'partials/stock_ticker'%></h2>
 		  <hr class="border border-3 colorgraph" style="margin-top: 10px;">
 
@@ -48,31 +51,30 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="table">
-								<table class="table table-striped">
+								<table class="table table-striped" style="border: 1px solid #d3d3d3;">
 									<thead>
 										<tr>
 											<th scope="col">Symbol</th>
 											<th scope="col">Broker email</th>
-											<th scope="col">Bought stock price</th>
 											<th scope="col">Quantity</th>
-											<th scope="col">Total amount</th>
 											<th scope="col"><strong>Current Stock Price</strong></th>
+											<th scope="col">Potential sell amount</th>
 											<th scope="col"></th>
 										</tr>
 									</thead>
 									<tbody>      
-								<% current_buyer.buyer_stocks.each do |stock| %>
-										<tr>
-											<td><%= stock.stockSymbol %></td>
-											<td><%= stock.broker_email %></td>
-											<td><%= stock.price %></td>
-											<td><%= stock.quantity %></td>
-											<td><%= stock.quantity * stock.price %></td>
-
-											<td><%= @client.quote(stock.stockSymbol).latest_price.to_f %></td>
-											<td><%= button_to "sell stock", sell_buyer_stock_stocks_path(stock, price: @client.quote(stock.stockSymbol).latest_price.to_f), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-										</tr>
-								<% end %>
+										<!-- selling buyer stock -->
+										<% current_buyer.buyer_stocks.order(id: :desc).each do |stock| %>
+												<tr>
+													<% @latest_price = @client.quote(stock.stockSymbol).latest_price.to_f %>
+													<td><%= stock.stockSymbol %></td>
+													<td><%= stock.broker_email %></td>
+													<td><%= stock.quantity %></td>
+													<td><%= @latest_price %></td>
+													<td><%= number_to_currency((stock.quantity * @latest_price).round(2)) %></td>
+													<td><%= button_to "sell stock", sell_buyer_stock_stocks_path(id: stock.id, price: @client.quote(stock.stockSymbol).latest_price.to_f), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
+												</tr>
+										<% end %>
 									</tbody>
 								</table>
 							</div>
