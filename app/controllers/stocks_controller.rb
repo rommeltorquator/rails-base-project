@@ -89,7 +89,7 @@ class StocksController < ApplicationController
   def destroy_buyer_stock
     @buyer_stock = BuyerStock.find(params[:id])
     @transaction = PurchaseTransaction.find_by(stock_id: @buyer_stock.id)
-    
+
     # added to buyer's cash
     @total = (params[:price].to_f * @buyer_stock.quantity.to_f)
     @added_cash = current_buyer.cash
