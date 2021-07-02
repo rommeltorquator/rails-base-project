@@ -7,7 +7,8 @@ class StocksController < ApplicationController
 
   def show
     @stock = @client.quote(params[:id].to_s)
-    @brokers = User.where(type: 'Broker')
+    # @brokers = User.where(type: 'Broker')
+    @brokers = Broker.all
     @buyer_stock = BuyerStock.new
   end
 
@@ -35,7 +36,7 @@ class StocksController < ApplicationController
             company_name: params[:company_name],
             price: params[:price],
             volume: params[:quantity],
-            total_value: params[:price].to_i * params[:quantity].to_i,
+            total_value: (params[:price].to_f * params[:quantity].to_f).round(2),
             user_id: current_buyer.id,
             broker_id: params[:broker_id],
             stock_id: params[:stock_id],
@@ -44,7 +45,7 @@ class StocksController < ApplicationController
           )
           @transaction.save
           @cash = current_buyer.cash
-          @cash.amount -= params[:price].to_i * params[:quantity].to_i
+          @cash.amount -= params[:price].to_f * params[:quantity].to_i
           @cash.save
           redirect_to stocks_path, notice: 'Stock was successfully added'
         else
@@ -56,7 +57,7 @@ class StocksController < ApplicationController
           company_name: params[:company_name],
           price: params[:price],
           volume: params[:quantity],
-          total_value: params[:price].to_i * params[:quantity].to_i,
+          total_value: params[:price].to_f * params[:quantity].to_f,
           user_id: current_buyer.id,
           broker_id: params[:broker_id],
           stock_id: params[:stock_id],
@@ -69,7 +70,7 @@ class StocksController < ApplicationController
         @buyer.save
 
         @cash = current_buyer.cash
-        @cash.amount -= params[:price].to_i * params[:quantity].to_i
+        @cash.amount -= params[:price].to_f * params[:quantity].to_i
         @cash.save
         redirect_to stocks_path, notice: 'Stock was successfully updated'
       end
@@ -86,33 +87,35 @@ class StocksController < ApplicationController
 
   # buyer stock
   def destroy_buyer_stock
-    @stock = BuyerStock.find(params[:id])
-    @transaction = PurchaseTransaction.find(@stock.id)
-    @total = (params[:price].to_f * @stock.quantity.to_f)
+    @buyer_stock = BuyerStock.find(params[:id])
+    @transaction = PurchaseTransaction.find_by(stock_id: @buyer_stock.id)
+
+    # added to buyer's cash
+    @total = (params[:price].to_f * @buyer_stock.quantity.to_f)
     @added_cash = current_buyer.cash
     @added_cash.amount += @total
     @added_cash.save
+
     # transaction receipt
-    @client.quote(@stock.stockSymbol.to_s)
+    @stock = @client.quote(@buyer_stock.stockSymbol.to_s)
     @transaction = PurchaseTransaction.new(
-      stock_code: @transaction.stock_code,
-      company_name: @transaction.company_name,
+      stock_code: @stock.symbol,
+      company_name: @stock.company_name,
 
       price: params[:price],
-
-      volume: @stock.quantity.to_f,
-
-      total_value: params[:price] * @stock.quantity.to_f,
-
+      volume: @buyer_stock.quantity,
+      total_value: params[:price].to_f * @buyer_stock.quantity.to_f,
       user_id: current_buyer.id,
-      broker_id: @transaction.broker_id,
-      stock_id: @transaction.stock_id,
-      broker_name: @transaction.broker_name,
+
+      broker_id: Broker.find_by(email: @buyer_stock.broker_email).id,
+      broker_name: @buyer_stock.broker_email,
+      stock_id: Broker.find_by(email: @buyer_stock.broker_email).stocks.where(symbol: @stock.symbol), # stock id of broker stock
+
       transaction_type: 'sell'
     )
     @transaction.save
 
-    if @stock.destroy
+    if @buyer_stock.destroy
       redirect_to portfolio_home_index_path, notice: 'Buyer stock has been sold'
     else
       redirect_to portfolio_home_index_path

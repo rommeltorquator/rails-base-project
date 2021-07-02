@@ -1,49 +1,37 @@
-
-		<div class="container border border-0">
+<section>
+		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
 					<%# if current_broker%>
 						<% if PurchaseTransaction.where(broker_id: current_broker.id).count > 0 %>
-							<div class="table">
-								<table class="table table-striped">
-									<thead>
+							<table class="table table-striped" style="border: 1px solid #d3d3d3;">
+								<thead>
+									<tr>
+										<th>Transaction type</th>
+										<th>Buyer</th>
+										<th>Symbol</th>
+										<th>Company Name</th>
+										<th>Price</th>
+										<th>Total Stock purchased</th>
+										<th>Total Amount</th>
+										<th>Broker</th>
+									</tr>
+								</thead>
+								<tbody>
+									<% PurchaseTransaction.where(broker_id: current_broker.id).order(id: :desc).each do |transaction| %>
 										<tr>
-											<th>Buyer</th>
-											<th>Symbol</th>
-											<th>Company Name</th>
-											<th>Price</th>
-											<th>Total Stock purchased</th>
-											<th>Total Amount</th>
-											<th>Broker</th>
+											<td class="<%= transaction.transaction_type == 'buy' ? "text-primary" : "text-success" %>"><%= transaction.transaction_type.capitalize %></td>
+											<td><%= transaction.user.first_name + " " + transaction.user.last_name %></td>
+											<td><%= transaction.stock_code %></td>
+											<td><%= transaction.company_name %></td>
+											<td><%= number_to_currency(transaction.price) %></td>
+											<td><%= transaction.volume %></td>
+											<td class="<%= transaction.transaction_type == 'buy' ? "text-danger" : "text-success" %>"><%= number_to_currency(transaction.total_value) %></td>
+											<td><%= transaction.broker.first_name + " " + transaction.broker.last_name %></td>
 										</tr>
-									</thead>
-									<tbody>
-										<% PurchaseTransaction.where(broker_id: current_broker.id).each do |transaction| %>
-										<% if transaction.transaction_type == ('sell')  %>
-											<tr>
-												<td><%= transaction.user.first_name + " " + transaction.user.last_name %></td>
-												<td><%= transaction.stock_code %></td>
-												<td><%= transaction.company_name %></td>
-												<td><%= transaction.price %></td>
-												<td class="text-success"><%= transaction.volume %></td>
-												<td class="text-danger"><%= transaction.volume * transaction.price %></td>
-												<td><%= transaction.broker.first_name + " " + transaction.broker.last_name %></td>
-											</tr>
-											<% else transaction.transaction_type == ('buy')  %>
-											<tr>
-                        <td><%= transaction.user.first_name + " " + transaction.user.last_name %></td>
-                        <td><%= transaction.stock_code %></td>
-                        <td><%= transaction.company_name %></td>
-                        <td><%= transaction.price %></td>
-                        <td class="text-danger"><%= transaction.volume %></td>
-                        <td class="text-success"><%= transaction.volume * transaction.price %></td>
-                        <td><%= transaction.broker.first_name + " " + transaction.broker.last_name %></td>
-                      </tr>
-                     <% end %>
-										<% end %>
-									</tbody>
-								</table>
-							</div>
+									<% end %>
+								</tbody>
+							</table>
 						<% else %>
 							<h1 class="text-center">No transactions yet</h1>
 						<% end %>
@@ -51,5 +39,6 @@
 				</div>
 			</div>
 		</div>
+	</section>
 
 	

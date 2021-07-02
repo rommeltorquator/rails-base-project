@@ -1,73 +1,61 @@
 <% if current_admin %>
   <h1 class="text-center" style="margin-top: 10px;">Overall Transactions</h1>
   <hr class="border border-3 colorgraph" style="margin-top: 10px;">
-  <section class="ftco-section">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">											
-          <div class="table">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Transaction type</th>
-                  <th>Buyer</th>
-                  <th>Symbol</th>
-                  <th>Company Name</th>
-                  <th>Price</th>
-                  <th>Total Stock purchased</th>
-                  <th>Total Amount</th>
-                  <th>Broker</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% PurchaseTransaction.all.each do |transaction| %>
-                  <% if transaction.transaction_type == ('buy')  %>
+  <section>
+    <% if PurchaseTransaction.all.count > 1 %>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">											
+            <div class="table">
+              <table class="table table-striped">
+                <thead>
                   <tr>
-                    <td class="text-danger"><%= transaction.transaction_type %></td>
-                    <td><%= link_to transaction.user.first_name + " " + transaction.user.last_name, show_user_home_index_path(transaction.user_id) %></td>
-                    <td><%= transaction.stock_code %></td>
-                    <td><%= transaction.company_name %></td>
-                    <td><%= transaction.price %></td>
-                    <td class="text-success"><%= transaction.volume %></td>
-                    <td class="text-danger"><%= transaction.volume * transaction.price %></td>
-                    <td><%= link_to transaction.broker.first_name + " " + transaction.broker.last_name, show_user_home_index_path(transaction.broker_id) %></td>
+                    <th>Transaction type</th>
+                    <th>Buyer</th>
+                    <th>Symbol</th>
+                    <th>Company Name</th>
+                    <th>Price</th>
+                    <th>Total Stock purchased</th>
+                    <th>Total Amount</th>
+                    <th>Broker</th>
                   </tr>
-                  <% else transaction.transaction_type == ('sell')  %>
-                  <tr>
-                    <td class="text-success"><%= transaction.transaction_type %></td>
-                    <td><%= link_to transaction.user.first_name + " " + transaction.user.last_name, show_user_home_index_path(transaction.user_id) %></td>
-                    <td><%= transaction.stock_code %></td>
-                    <td><%= transaction.company_name %></td>
-                    <td><%= transaction.price %></td>
-                    <td class="text-danger"><%= transaction.volume %></td>
-                    <td class="text-success"><%= transaction.volume * transaction.price %></td>
-                    <td><%= link_to transaction.broker.first_name + " " + transaction.broker.last_name, show_user_home_index_path(transaction.broker_id) %></td>
-                  </tr>
+                </thead>
+                <tbody>
+                  <% PurchaseTransaction.all.order(id: :desc).each do |transaction| %>
+                    <tr>
+                      <td class="<%= transaction.transaction_type == 'buy' ? "text-primary" : "text-success" %>"><%= transaction.transaction_type.capitalize %></td>
+                      <td><%= link_to transaction.user.first_name + " " + transaction.user.last_name, show_user_home_index_path(transaction.user_id) %></td>
+                      <td><%= transaction.stock_code %></td>
+                      <td><%= transaction.company_name %></td>
+                      <td><%= number_to_currency(transaction.price) %></td>
+                      <td><%= transaction.volume %></td>
+                      <td class="<%= transaction.transaction_type == 'buy' ? "text-danger" : "text-success" %>"><%= number_to_currency(transaction.volume * transaction.price) %></td>
+                      <td><%= link_to transaction.broker.first_name + " " + transaction.broker.last_name, show_user_home_index_path(transaction.broker_id) %></td>
+                    </tr>
                   <% end %>
-                <% end %>
-              </tbody>
-            </table>
+                </tbody>
+              </table>
+            </div>
           </div>
-				</div>
-			</div>
-		</div>
+        </div>
+      </div>
+    <% else %>
+      <h1 class="text-center">No transactions</h1>
+    <% end %>
 	</section>
 <% else %>
   <h1 class="text-center" style="margin-top: 10px;">Transactions</h1>
   <hr class="border border-3 colorgraph" style="margin-top: 10px;">
-  <br/>
 <% end%>
 
 <!-- for broker -->
 <% if current_broker && current_broker.approved? %>
-  
   <%= render 'partials/transaction_table_broker'%>
   <br/>
 <% end %>
 
 <!-- for buyer -->
 <% if current_buyer %>
-   
   <%= render 'partials/transaction_table_buyers'%>
   <br/>
 <% end %>

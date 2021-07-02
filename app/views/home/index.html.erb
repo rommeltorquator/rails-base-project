@@ -1,5 +1,13 @@
 <% if broker_signed_in? && current_broker.approved? %>
   <%= render 'partials/broker_home_page' %>
+<% elsif broker_signed_in? && !current_broker.approved? %>
+  <div class="container">
+    <div class="row">
+      <div class="offset-md-3 col-md-6">
+        <h1 class="text-center my-5 display-5">Waiting for Admin approval</h1>
+        <%= image_tag("Work time-amico.png", class: "w-100") %>
+      </div>
+    </div>
 <% end %>
 
 <% if buyer_signed_in? %>
@@ -8,15 +16,6 @@
 
 <% if admin_signed_in? %>
   <div class="container">
-  <div class="container-full bg-dark me-2">
-    <!-- Button trigger modal -->
-    <div class="navbar float-right">
-    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      Create new user
-    </button>
-    </div>
-     </div>
-
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -46,9 +45,9 @@
                 <%= f.text_field :last_name, value: "", class: "form-control" %>
               </div>
 
-              <div class="input-group mb-3">
-                <%= f.label :type, class:"input-group-text" %>
-                <%= f.select :type, [ "Buyer", "Broker" ], class: "form-select" %>
+              <div class="form-group">
+                <%= f.label :type %>
+                <%= f.select :type, [ "Buyer", "Broker" ], {}, { :class => 'form-control' } %>
               </div>
 
               <div class="input-group mb-3">
@@ -70,9 +69,19 @@
         </div>
       </div>
     </div>
-    <br/>
+
     <div class="container border border-0" style="margin-top: 10px;">
-    <h1 class="text-center">Welcome <%= current_admin.first_name %>, what would you want to do today?</h1>
+    <div class="row">
+      <div class="col-md-10">
+        <h1 class="text-left">Welcome <%= current_admin.first_name %>, what would you want to do today?</h1>
+      </div>
+      <div class="col-md-2 d-flex align-items-center justify-content-end">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Create new user
+        </button>
+      </div>
+    </div>
     <hr class="border border-3 colorgraph" style="margin-top: 10px;">
     </div>
 
@@ -82,10 +91,10 @@
       <div class="card text-white bg-primary" style="max-width: 15rem;">
         <div class="card-header"><i class="fa fa-user-plus" aria-hidden="true"></i></div>
           <div class="card-body">
-            <h5 class="card-title text-white">Pending Approval(s):</h5>
-            <p class="card-text">
+            <h5 class="card-title text-white text-center">Pending Approval(s):</h5>
+            <h3 class="card-text text-center">
                <%= @pending_approval.count %>
-            </p>
+            </h3>
           </div>
         </div>
       </div>
@@ -94,10 +103,10 @@
       <div class="card text-white bg-secondary" style="max-width: 15rem;">
         <div class="card-header"><i class="fa fa-tasks" aria-hidden="true"></i></div>
           <div class="card-body">
-            <h5 class="card-title text-white">Total Transactions:</h5>
-            <p class="card-text">
+            <h5 class="card-title text-white text-center">Total Transactions:</h5>
+            <h3 class="card-text text-center">
                <%= @transactions.count %>
-            </p>
+            </h3>
           </div>
         </div>
       </div>
@@ -106,10 +115,10 @@
       <div class="card text-white bg-info" style="max-width: 18rem;">
         <div class="card-header"><i class="fa fa-user-circle" aria-hidden="true"></i></div>
           <div class="card-body">
-            <h5 class="card-title text-white">Buyer Count(s):</h5>
-            <p class="card-text">
+            <h5 class="card-title text-white text-center">Buyer Count(s):</h5>
+            <h3 class="card-text text-center">
                <%= @buyers.count %>
-            </p>
+            </h3>
           </div>
         </div>
       </div>
@@ -118,10 +127,10 @@
       <div class="card text-white bg-warning" style="max-width: 18rem;">
         <div class="card-header"><i class="fa fa-user-circle-o" aria-hidden="true"></i></div>
           <div class="card-body">
-            <h5 class="card-title text-white">Broker Count(s):</h5>
-            <p class="card-text">
+            <h5 class="card-title text-white text-center">Broker Count(s):</h5>
+            <h3 class="card-text text-center">
                <%= @brokers.count %>
-            </p>
+            </h3>
           </div>
         </div>
       </div>
@@ -134,40 +143,40 @@
     <div class="col col-6 align-items-center">
       <div class="card" style="max-width: 38rem;">
       <h1 class="text-center">Buyer List</h1>
-      <div class="card-body px-4">
-      <hr class="colorgraph "><br>
-        <% @buyers.each do |buyer| %>
-          <p style="margin-left: 5px;"> Buyer ID: <%= link_to buyer.id, show_user_home_index_path(buyer) %></p>
-          <p style="margin-left: 10px;"> Registered Email: <%= buyer.email %></p>
-          <p style="margin-left: 10px;"> First Name: <%= buyer.first_name %></p>
-          <p style="margin-left: 10px;"> Last Name: <%= buyer.last_name %></p>
-          <hr class="colorgraph"><br>
-        <% end %>
+      <hr class="colorgraph">
+        <div class="card-body">
+          <% @buyers.order(id: :desc).each do |buyer| %>
+            <p>Buyer ID: <strong><%= link_to buyer.id, show_user_home_index_path(buyer) %></strong></p>
+            <p>Registered Email: <strong><%= buyer.email %></strong></p>
+            <p>First Name: <strong><%= buyer.first_name %></strong></p>
+            <p>Last Name: <strong><%= buyer.last_name %></strong></p>
+            <hr class="colorgraph">
+          <% end %>
         </div>
       </div> <!-- card 1 end --> 
     </div> <!-- col 1 end -->
     <div class="col col-6 align-items-center">
       <div class="card" style="max-width: 38rem;">
       <h1 class="text-center">Broker List</h1>
-      <div class="card-body px-4">
-      <hr class="colorgraph"><br>
-        <% @brokers.each do |broker| %>
-          <p style="margin-left: 5px;"> Broker ID: <%= link_to broker.id, show_user_home_index_path(broker) %></p>
-          <p style="margin-left: 10px;"> Registered Email: <%= broker.email %></p>
-          <p style="margin-left: 10px;"> First Name: <%= broker.first_name %></p>
-          <p style="margin-left: 10px;"> Last Name: <%= broker.last_name %></p>
-          <% if broker.approved == false %>
-            <h3 style="margin-left: 5px;"> Status: Pending approval</h3>
-            <%= link_to 'Accept', { :controller => "home",
-                                    :action => "approve",
-                                    :broker => broker,
-                                    :approved => true }, method: 'patch', class:"btn btn-danger btn-block" %>
-                                    <hr class="colorgraph"><br>
-          <% else %>
-            <h3>Status: Approved</h3>
-            <hr class="colorgraph"><br>
+      <hr class="colorgraph">
+        <div class="card-body">
+          <% @brokers.order(id: :desc).each do |broker| %>
+            <p>Broker ID: <strong><%= link_to broker.id, show_user_home_index_path(broker) %></strong></p>
+            <p>Registered Email: <strong><%= broker.email %></strong></p>
+            <p>First Name: <strong><%= broker.first_name %></strong></p>
+            <p>Last Name: <strong><%= broker.last_name %></strong></p>
+            <% if broker.approved == false %>
+              <p>Status: <span class="text-danger"><strong>Pending approval</strong></span></p>
+              <%= link_to 'Accept', { :controller => "home",
+                                      :action => "approve",
+                                      :broker => broker,
+                                      :approved => true }, method: 'patch', class:"btn btn-danger btn-block" %>
+                                      <hr class="colorgraph"><br>
+            <% else %>
+              <p>Status: <span class="text-success"><strong>Approved</strong></span></p>
+              <hr class="colorgraph">
+            <% end %>
           <% end %>
-        <% end %>
         </div>
       </div><!-- card 2 end -->  
     </div> <!-- col 2 end -->
@@ -178,4 +187,3 @@
 <% if !broker_signed_in? && !buyer_signed_in? && !admin_signed_in? %>
   <%= render 'partials/index' %>
 <% end %>
-

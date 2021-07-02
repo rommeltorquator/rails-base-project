@@ -1,19 +1,19 @@
-<h1 class="text-center" style="margin-top: 10px;"><%= current_buyer.first_name %>'s Buyer Dashboard</h1>
+<h1 class="text-center"><%= current_buyer.first_name %>'s Dashboard</h1>
 <h2 class="text-center"><%= render 'partials/stock_ticker'%></h2>
-<hr class="border border-3 colorgraph" style="margin-top: 10px;">
 
 <div class="container">
   <div class="row my-3">
-    <div class="offset-md-3 col-md-6 d-flex align-items-center justify-content-between p-2" style="border: 2px solid #666;">
-      <h3>Your cash: <%= current_buyer.cash.amount.to_f %></h3>
-      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%= current_buyer.id %>">Add Cash</button>
+    <div class="offset-md-3 col-md-6 d-flex align-items-center justify-content-between p-3" style="border: 2px solid #666;">
+      <h3 style="margin-bottom: 0;">You cash: <%= number_to_currency(current_buyer.cash.amount.to_f.round(2)) %></h3>
+      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%= current_buyer.id %>">Add cash</button>
     </div>
+
     <!-- Modal -->
     <div class="modal fade" id="staticBackdrop<%= current_buyer.id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel<%= current_buyer.id %>" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel<%= current_buyer.id %>">Cash In</h5>
+            <h5 class="modal-title" id="staticBackdropLabel<%= current_buyer.id %>">Cash in</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -30,6 +30,10 @@
     </div>
   </div>
 </div>
+
+
+
+
 <!-- 1st table transactions -->
 <div class="container">
   <div class="card">
@@ -41,41 +45,36 @@
         In the meantime, here's a quick view of your current transactions.
       </p>
       <% if current_buyer.purchase_transactions.count > 0 %>
-        <table class="table table-striped">
+        <table class="table table-striped" style="border: 1px solid #d3d3d3;">
           <thead>
-            <tr>
+            <tr>									
+              <th>Transaction type</th>
               <th>Buyer</th>
               <th>Symbol</th>
               <th>Company Name</th>
-              <th>Current Price</th>
+              <th>Price</th>
               <th>Total Stock purchased</th>
-              <th>Total Amount</th>
+              <th>Amount</th>
               <th>Broker</th>
             </tr>
           </thead>
           <tbody>
-            <% current_buyer.purchase_transactions.limit(3).each do |transaction| %>
-              <% if transaction.transaction_type == ('buy')  %>
+            <% current_buyer.purchase_transactions.order(id: :desc).limit(3).each do |transaction| %>
               <tr>
+                <td><%= transaction.transaction_type.capitalize %></td>
                 <td><%= transaction.user.first_name + " " + transaction.user.last_name %></td>
                 <td><%= transaction.stock_code %></td>
                 <td><%= transaction.company_name %></td>
-                <td><%= transaction.price %></td>
-                <td class="text-success"><%= transaction.volume %></td>
-                <td class="text-danger"><%= transaction.volume * transaction.price %></td>
+                <td><%= number_to_currency(transaction.price) %></td>
+                <td><%= transaction.volume %></td>
+
+                <!-- total-price -->
+
+                <td class="<%= transaction.transaction_type == 'buy' ? "text-danger" : "text-success" %>"><%= transaction.transaction_type == 'buy' ? "-" : "+" %> <%= transaction.total_value.round(2) %></td>
+
+                
                 <td><%= transaction.broker.first_name + " " + transaction.broker.last_name %></td>
               </tr>
-              <% else transaction.transaction_type == ('sell')  %>
-              <tr>
-                <td class="text-success"><%= transaction.user.first_name + " " + transaction.user.last_name %></td>
-                <td><%= transaction.stock_code %></td>
-                <td><%= transaction.company_name %></td>
-                <td><%= transaction.price %></td>
-                <td class="text-danger"><%= transaction.volume %></td>
-                <td class="text-success"><%= transaction.volume * transaction.price %></td>
-                <td><%= transaction.broker.first_name + " " + transaction.broker.last_name %></td>
-              </tr>
-            <% end %>
             <% end %>
           </tbody>
         </table>
@@ -87,10 +86,11 @@
   </div>
 </div>
 <!-- end 1st table -->
+
 <!-- 2nd table buyer list -->
 <div class="container" style="margin-top: 10px;">
   <div class="card-group">
-    <div class="card col-md-12" style="padding: 10px;">
+    <div class="card">
       <div class="card-header">Trending</div>
         <div class="card-body">
           <h5 class="card-title">Watched Stocks</h5>
@@ -98,7 +98,7 @@
             Daily Performance of your watched Stock and (if any) Buyers that have purchased the stock.
           </p>
           <% if current_buyer.watched_stocks.count > 0 %>
-            <table class="table table-striped">
+            <table class="table table-striped" style="border: 1px solid #d3d3d3;">
               <thead>
                 <tr>
                   <th scope="col">Stock name</th>
@@ -110,13 +110,13 @@
                 </tr>
               </thead>
               <tbody>
-                <% current_buyer.watched_stocks.each do |stock| %>
+                <% current_buyer.watched_stocks.order(id: :desc).each do |stock| %>
                   <tr>
                     <td><%= stock.symbol %></td>
                     <td><%= stock.company %></td>
-                    <td><%= stock.latest_price  %></td>
-                    <td><%= stock.avg_total_volume %></td>
-                    <td><%= stock.change_percent_s %></td>
+                    <td><%= number_to_currency(@client.quote(stock.symbol).latest_price) %></td>
+                    <td><%= number_with_delimiter(@client.quote(stock.symbol).avg_total_volume, :delimiter => ',') %></td>
+                    <td class="<%= @client.quote(stock.symbol).change_percent_s[0] == '-' ? 'text-danger' : 'text-success' %>"><%= @client.quote(stock.symbol).change_percent_s %></td>
                     <td><%= link_to "show stock", stock_path(stock.symbol), class: "btn btn-danger" %></td>
                   </tr>
                 <% end %>
@@ -131,10 +131,11 @@
   </div>
 </div>
 <!-- end 2nd table -->
+
 <!-- 3rd table buyer list -->
 <div class="container" style="margin-top: 10px;">
   <div class="card-group">
-    <div class="card col-md-12" style="padding: 10px;">
+    <div class="card">
       <div class="card-header">Portfolio</div>
       <div class="card-body">
         <h5 class="card-title">Portfolio Quick view</h5>
@@ -142,21 +143,23 @@
           Portfolio Quick View is your top earning stocks.
         </p>
         <% if current_buyer.buyer_stocks.count > 0 %>
-        <table class="table table-striped">
+        <table class="table table-striped" style="border: 1px solid #d3d3d3;">
           <thead>
             <tr>
               <th scope="col">Symbol</th>
               <th scope="col">Price</th>
               <th scope="col">Quantity</th>
+              <th scope="col">Total amount</th>
               <th scope="col">broker</th>
             </tr>
           </thead>
           <tbody>
-            <% current_buyer.buyer_stocks.limit(3).each do |stock| %>
+            <% current_buyer.buyer_stocks.order(id: :desc).limit(3).each do |stock| %>
               <tr>
                 <td><%= stock.stockSymbol %></td>
-                <td><%= stock.price %></td>
+                <td><%= number_to_currency(stock.price) %></td>
                 <td><%= stock.quantity %></td>
+                <td><%= number_to_currency(stock.quantity * stock.price) %></td>
                 <td><%= stock.broker_email %></td>
               </tr>
             <% end %>

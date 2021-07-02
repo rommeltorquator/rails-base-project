@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_01_055142) do
+ActiveRecord::Schema.define(version: 2021_07_02_135933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2021_07_01_055142) do
     t.string "stock_code"
     t.decimal "price"
     t.integer "volume"
-    t.decimal "total_value"
+    t.float "total_value"
     t.string "broker_name"
     t.string "company_name"
     t.bigint "user_id", null: false
