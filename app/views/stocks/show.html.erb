@@ -1,47 +1,52 @@
-<h1 class="text-center"><%= @stock.company_name %></h1>
-
-<br/>
-<br/>
-<br/>
+<div class="container border border-0" style="margin-top: 10px;">
+  <h1 class="text-center"><%= @stock.company_name %> Details</h1>
+  <hr class="border border-3 colorgraph" style="margin-top: 10px;">
 
 <div class="container">
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-8" style="margin-top:100px;">
       <!-- for buyer -->
+      <div class="card text-dark bg-light border-border-2">
       <% if current_buyer %>
-        <h1>name: <%= @stock.company_name %></h1><br/>
-        <h1>symbol: <%= @stock.symbol %></h1><br/>
-        <h1>latest price: <%= number_to_currency(@stock.latest_price) %></h1><br/>
-        <h1>change: <%= number_to_currency(@stock.change) %></h1><br/>
-        <h1>change percent: <%= @stock.change_percent_s %></h1><br/>
-        <h1>avg total volume: <%= @stock.avg_total_volume %></h1><br/>
-        <h1>price as of: <%= @stock.latest_time %></h1><br/>
+        <h2>Name: <%= @stock.company_name %></h2><br/>
+        <h3>Symbol: <%= @stock.symbol %></h3><br/>
+        <h4 style="margin-left: 10px;">Latest price: <%= number_to_currency(@stock.latest_price) %></h4><br/>
+        <h4 style="margin-left: 10px;">Change: <%= number_to_currency(@stock.change) %></h4><br/>
+        <h4 style="margin-left: 10px;">Change Percent: <%= @stock.change_percent_s %></h4><br/>
+        <h4 style="margin-left: 10px;">Average Total Volume: <%= @stock.avg_total_volume %></h4><br/>
+        <h4 style="margin-left: 10px;">Price As Of: <%= @stock.latest_time %></h4><br/>
+        <br/>
+        <br/>
       <% end %>
+      </div>
     </div>
 
     <div class="col-md-4">
+      <div class="card text-dark bg-light border-border-2">
       <% if current_buyer %>
-        <h1>Top brokers</h1>
+        <h1 class="text-center">Top brokers</h1>
+        <hr class="border border-3 colorgraph" style="margin-top: 10px;">
           <% @brokers.each do |broker| %>
             <% if broker.stocks.where(symbol: @stock.symbol.to_s).any? %>
-              <h1>broker id: <%= broker.id %></h1>
-              <p><%= broker.stocks.where(symbol: @stock.symbol.to_s).any? %></p>
-              <p><%= broker.email %></p>
-              <p><%= broker.first_name %></p>
-              <p><%= broker.last_name %></p>
-              <p>number of stocks: <%= broker.stocks.count %></p>
-              <p>total brokered deal: <%= PurchaseTransaction.where(broker_id: broker).count %></p>
-              <p>total Brokered amount: $3,000,000,000</p>
-              <p>Rating: 100%</p>
+              <h2>Broker ID: <%= broker.id %></h2>
+              <p style="margin-left: 5px;">Has In Stocks: <%= broker.stocks.where(symbol: @stock.symbol.to_s).any? %></p>
+              <p style="margin-left: 10px;">Email: <%= broker.email %></p>
+              <p style="margin-left: 10px;">First Name: <%= broker.first_name %></p>
+              <p style="margin-left: 10px;">Last Name: <%= broker.last_name %></p>
+              <p style="margin-left: 10px;">Number of stocks: <%= broker.stocks.count %></p>
+              <p style="margin-left: 10px;">Total Deals Brokered: <%= PurchaseTransaction.where(broker_id: broker).count %></p>
+              <p style="margin-left: 10px;">total Brokered amount: $3,000,000,000</p>
+              <p style="margin-left: 10px;">Rating: 100%</p>
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%= broker.id %>">buy stock</button>
-              <hr/>
+              <hr class="border border-3 colorgraph" style="margin-top: 10px;">
+
 
               <!-- Modal -->
               <div class="modal fade" id="staticBackdrop<%= broker.id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel<%= broker.id %>" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="staticBackdropLabel<%= broker.id %>">Modal title</h5>
+                      <h5 class="modal-title" id="staticBackdropLabel<%= broker.id %>">Buy Stock</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -60,6 +65,7 @@
                           <%= form.submit class: "btn btn-danger" %>
                         </div>
                       <% end %>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -69,4 +75,5 @@
       <% end %> <!--end of current buyer if condition -->
     </div>
   </div>
+</div>
 </div>
