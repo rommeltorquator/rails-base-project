@@ -61,8 +61,15 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "rails_project_production"
 
   config.action_mailer.perform_caching = false
-  config.action_mailer.smtp_settings = { port: 587 }
   config.action_mailer.default_url_options = { :host => 'stockxchng.herokuapp.com' }
+  config.action_mailer.default charset: 'utf-8'
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.smtp_settings = {
+  adress: $SMTP_SERVER,
+  port: $PORT,
+  from: $MAIL,
+}
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
