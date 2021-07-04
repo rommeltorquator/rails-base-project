@@ -17,6 +17,8 @@ require "sprockets/railtie"
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+config.assets.version = '1.0'
+
 module RailsProject
   class Application < Rails::Application
     config.before_configuration do
