@@ -69,7 +69,7 @@ class HomeController < ApplicationController
     @client = IEX::Api::Client.new(
       publishable_token: ENV['PUBLIC'],
       secret_token: ENV['SECRET'],
-      endpoint: 'https://sandbox.iexapis.com/v1'
+      endpoint: 'https://sandbox.iexapis.com/'
     )
   end
 end
