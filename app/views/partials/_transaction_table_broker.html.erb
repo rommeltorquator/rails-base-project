@@ -14,7 +14,6 @@
 										<th>Price</th>
 										<th>Total Stock purchased</th>
 										<th>Total Amount</th>
-										<th>Broker</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -27,7 +26,6 @@
 											<td><%= number_to_currency(transaction.price) %></td>
 											<td><%= transaction.volume %></td>
 											<td class="<%= transaction.transaction_type == 'buy' ? "text-danger" : "text-success" %>"><%= number_to_currency(transaction.total_value) %></td>
-											<td><%= transaction.broker.first_name + " " + transaction.broker.last_name %></td>
 										</tr>
 									<% end %>
 								</tbody>

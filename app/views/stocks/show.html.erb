@@ -35,40 +35,37 @@
                   <td><%= broker.purchase_transactions.count %></td>
                   <td><%= number_to_currency(broker.purchase_transactions.all.total_brokered_deal.round(2))  %></td>
                   <td>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%= broker.id %>">buy stock</button>
-                  </td>										
-                </tr>
-
-                <!-- Modal -->
-                <div class="modal fade" id="staticBackdrop<%= broker.id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel<%= broker.id %>" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel<%= broker.id %>">Buy Stock</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <%= form_with url: add_stock_stocks_path, local: true do |form| %>
-                          <div class="mb-3">                      
-                            <%= form.number_field :quantity, class: "form-control" %>
-                            <p>Current stock price: <%= @stock.latest_price %></p>
-                            <!-- current_buyer -->
-                            <%= form.hidden_field :price, :value => @stock.latest_price %>
-                            <%= form.hidden_field :stock_symbol, :value => @stock.symbol.to_s %>
-                            <%= form.hidden_field :broker_id, :value => broker.id %>
-                            <%= form.hidden_field :broker_email, :value => broker.email %>
-                            <%= form.hidden_field :broker_name, :value => broker.first_name + ' ' + broker.last_name %>
-                            <%= form.hidden_field :stock_id, :value => broker.stocks.where(symbol: @stock.symbol.to_s).first.id %>
-                            <%= form.hidden_field :company_name, :value => @stock.company_name %>
-                            <%= form.submit class: "btn btn-danger" %>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal<%= broker.id %>">Buy stock</button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal<%= broker.id %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= broker.id %>" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel<%= broker.id %>">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
-                        <% end %>
+                          <div class="modal-body">
+                            <%= form_with url: add_stock_stocks_path, local: true do |form| %>            
+                              <%= form.number_field :quantity, class: "form-control" %>
+                              <p>Current stock price: <%= @stock.latest_price %></p>
+                              <p>Please refresh the screen if the buy button doesn't work initially</p>
+                              <!-- current_buyer -->
+                              <%= form.hidden_field :price, :value => @stock.latest_price %>
+                              <%= form.hidden_field :stock_symbol, :value => @stock.symbol.to_s %>
+                              <%= form.hidden_field :broker_id, :value => broker.id %>
+                              <%= form.hidden_field :broker_email, :value => broker.email %>
+                              <%= form.hidden_field :broker_name, :value => broker.first_name + ' ' + broker.last_name %>
+                              <%= form.hidden_field :stock_id, :value => broker.stocks.where(symbol: @stock.symbol.to_s).first.id %>
+                              <%= form.hidden_field :company_name, :value => @stock.company_name %>
+                              <%= form.submit class: "btn btn-success", id: "buy-stock-button" %>
+                            <% end %>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              <% end %>              
+                    </div> <!-- end modal -->
+                  </td>
+                </tr>
+              <% end %>
             <% end %>
           </tbody>
         </table>

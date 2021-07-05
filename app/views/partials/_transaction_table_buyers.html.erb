@@ -7,26 +7,24 @@
 						  <thead>
 						    <tr>
 									<th>Transaction type</th>
-									<th>Buyer</th>
 									<th>Symbol</th>
+									<th>Broker</th>
 									<th>Company Name</th>
 									<th>Price</th>
 									<th>Total Stock purchased</th>
 									<th>Total Amount</th>
-									<th>Broker</th>
 								</tr>
 						  </thead>
 						  <tbody>
 								<% current_buyer.purchase_transactions.order(id: :desc).each do |transaction| %>
 									<tr>
 										<td class="<%= transaction.transaction_type == 'buy' ? "text-primary" : "text-success" %>"><%= transaction.transaction_type.capitalize %></td>
-										<td><%= transaction.user.first_name + " " + transaction.user.last_name %></td>
 										<td><%= transaction.stock_code %></td>
+										<td><%= transaction.broker.first_name + " " + transaction.broker.last_name %></td>
 										<td><%= transaction.company_name %></td>
 										<td><%= number_to_currency(transaction.price) %></td>
 										<td><%= transaction.volume %></td>
 										<td class="<%= transaction.transaction_type == 'buy' ? "text-danger" : "text-success" %>"><%= number_to_currency(transaction.total_value) %></td>
-										<td><%= transaction.broker.first_name + " " + transaction.broker.last_name %></td>
 									</tr>
 								<% end %>
 						  </tbody>
