@@ -141,7 +141,7 @@
           Portfolio Quick View is your top earning stocks.
         </p>
         <% if current_buyer.buyer_stocks.count > 0 %>
-        <table class="table table-striped" style="border: 1px solid #d3d3d3;">
+          <table class="table table-striped" style="border: 1px solid #d3d3d3;">
           <thead>
             <tr>
               <th scope="col">Symbol</th>
@@ -159,13 +159,21 @@
                 <td><%= stock.quantity %></td>
                 <td><%= number_to_currency(stock.quantity * stock.price) %></td>
                 <td><%= stock.broker_email %></td>
-              </tr>
-            <% end %>
-        </table>
-        <%= link_to "View Details", portfolio_home_index_path, class:"btn btn-primary" %>
-        <% else %>
-          <h3 class="text-center">No stock portfolio available</h3>
-        <% end %>
+            </thead>
+            <tbody>
+              <% current_buyer.buyer_stocks.limit(3).each do |stock| %>
+                <tr class="table-active">
+                  <td><%= stock.stockSymbol %></td>
+                  <td><%= stock.price %></td>
+                  <td><%= stock.quantity %></td>
+                  <td><%= stock.broker_email %></td>
+                </tr>
+              <% end %>
+          </table>
+          <%= link_to "View Details", portfolio_home_index_path, class:"btn btn-primary" %>
+          <% else %>
+            <h3 class="text-center">No stock portfolio available</h3>
+          <% end %>
     </div>
   </div>
 </div>
