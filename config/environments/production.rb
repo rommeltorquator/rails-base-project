@@ -66,11 +66,11 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: host }
   
   # SMTP settings for gmail
-  config.action_mailer.smtp_settings = {
+    config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",
     :port                 => 587,
-    :user_name            => 'jarencudilla',
-    :password             => 'cnnicwbgtebobyha',
+    :user_name            => 'badongpagong',
+    :password             => 'newvrjngtddgqbbq',
     :authentication       => "plain",
     :enable_starttls_auto => true
   }
@@ -101,6 +101,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+  
 
   # Inserts middleware to perform automatic connection switching.
   # The `database_selector` hash is used to pass options to the DatabaseSelector
