@@ -66,11 +66,11 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: host }
   
   # SMTP settings for gmail
-  config.action_mailer.smtp_settings = {
+    config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",
     :port                 => 587,
-    :user_name            => 'jarencudilla',
-    :password             => 'cnnicwbgtebobyha',
+    :user_name            => 'badongpagong',
+    :password             => 'newvrjngtddgqbbq',
     :authentication       => "plain",
     :enable_starttls_auto => true
   }
